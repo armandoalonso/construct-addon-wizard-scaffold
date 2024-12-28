@@ -7,6 +7,7 @@ import * as actionConfig from "../generated/actionConfig.js";
 import * as conditionConfig from "../generated/conditionConfig.js";
 import * as expressionConfig from "../generated/expressionConfig.js";
 import { failOnMalformedExtraLang } from "../buildconfig.js";
+import fromConsole from "./fromConsole.js";
 
 const defaultLanguage = "en-US";
 
@@ -239,7 +240,7 @@ export default async function generateLangJSON() {
 }
 
 // if is being called from the command line
-if (import.meta.url.endsWith(process.argv[1].split(path.sep).join("/"))) {
+if (fromConsole(import.meta.url)) {
   chalkUtils.fromCommandLine();
   generateLangJSON();
 }

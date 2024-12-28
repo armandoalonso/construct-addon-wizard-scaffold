@@ -2,6 +2,7 @@ import fs from "fs";
 import path from "path";
 import * as chalkUtils from "./chalkUtils.js";
 import config from "../template/addonConfig.js";
+import fromConsole from "./fromConsole.js";
 
 function getFileListFromConfig() {
   const files = [];
@@ -73,7 +74,7 @@ export default async function generateAddonJSON() {
 }
 
 // if is being called from the command line
-if (import.meta.url.endsWith(process.argv[1].split(path.sep).join("/"))) {
+if (fromConsole(import.meta.url)) {
   chalkUtils.fromCommandLine();
   generateAddonJSON();
 }

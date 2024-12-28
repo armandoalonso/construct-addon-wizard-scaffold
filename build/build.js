@@ -1,5 +1,5 @@
-import path from "path";
 import * as chalkUtils from "./chalkUtils.js";
+import fromConsole from "./fromConsole.js";
 
 const buildSteps = [
   "./validateAddonConfig.js",
@@ -38,6 +38,6 @@ export default async function build() {
   chalkUtils.successBlue("Build successful!");
 }
 
-if (import.meta.url.endsWith(process.argv[1].split(path.sep).join("/"))) {
+if (fromConsole(import.meta.url)) {
   build();
 }

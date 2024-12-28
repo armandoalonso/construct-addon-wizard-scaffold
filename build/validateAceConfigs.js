@@ -1,11 +1,10 @@
-import chalk from "chalk";
-import path from "path";
 import * as chalkUtils from "./chalkUtils.js";
 import { actionSchema, conditionSchema, expressionSchema } from "./schemas.js";
 import { config as actionConfigs } from "../generated/actionConfig.js";
 import { config as conditionConfigs } from "../generated/conditionConfig.js";
 import { config as expressionConfigs } from "../generated/expressionConfig.js";
 import camelCasify from "./camelCasify.js";
+import fromConsole from "./fromConsole.js";
 
 let typeMap = {
   action: {
@@ -74,7 +73,7 @@ export default async function validateAce() {
 }
 
 // if is being called from the command line
-if (import.meta.url.endsWith(process.argv[1].split(path.sep).join("/"))) {
+if (fromConsole(import.meta.url)) {
   chalkUtils.fromCommandLine();
   validateAce();
 }

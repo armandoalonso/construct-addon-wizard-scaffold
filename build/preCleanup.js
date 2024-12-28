@@ -1,6 +1,6 @@
-import path from "path";
 import * as chalkUtils from "./chalkUtils.js";
 import removeDir from "./removeDir.js";
+import fromConsole from "./fromConsole.js";
 
 export default async function cleanup() {
   let hadError = false;
@@ -17,7 +17,7 @@ export default async function cleanup() {
 }
 
 // if is being called from the command line
-if (import.meta.url.endsWith(process.argv[1].split(path.sep).join("/"))) {
+if (fromConsole(import.meta.url)) {
   chalkUtils.fromCommandLine();
   cleanup();
 }

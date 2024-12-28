@@ -2,6 +2,7 @@ import fs from "fs";
 import path from "path";
 import * as chalkUtils from "./chalkUtils.js";
 import camelCasify from "./camelCasify.js";
+import fromConsole from "./fromConsole.js";
 
 let hadError = false;
 function processACEInCategory(basePath, category, type, collection, nameSet) {
@@ -167,7 +168,7 @@ export default async function generateAceFiles() {
   return hadError;
 }
 
-if (import.meta.url.endsWith(process.argv[1].split(path.sep).join("/"))) {
+if (fromConsole(import.meta.url)) {
   chalkUtils.fromCommandLine();
   generateAceFiles();
 }

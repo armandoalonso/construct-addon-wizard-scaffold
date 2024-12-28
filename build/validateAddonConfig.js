@@ -1,7 +1,7 @@
-import path from "path";
 import * as chalkUtils from "./chalkUtils.js";
 import { configSchema } from "./schemas.js";
 import * as addonConfig from "../config.caw.js";
+import fromConsole from "./fromConsole.js";
 
 export default async function validateAddonConfig() {
   let hadError = false;
@@ -24,7 +24,7 @@ export default async function validateAddonConfig() {
 }
 
 // if is being called from the command line
-if (import.meta.url.endsWith(process.argv[1].split(path.sep).join("/"))) {
+if (fromConsole(import.meta.url)) {
   chalkUtils.fromCommandLine();
   validateAddonConfig();
 }

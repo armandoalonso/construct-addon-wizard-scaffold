@@ -1,8 +1,8 @@
 import fs from "fs";
-import path from "path";
 import AdmZip from "adm-zip";
 import * as chalkUtils from "./chalkUtils.js";
 import { id, version } from "../config.caw.js";
+import fromConsole from "./fromConsole.js";
 
 export default async function packageAddon() {
   let hadError = false;
@@ -31,7 +31,7 @@ export default async function packageAddon() {
 }
 
 // if is being called from the command line
-if (import.meta.url.endsWith(process.argv[1].split(path.sep).join("/"))) {
+if (fromConsole(import.meta.url)) {
   chalkUtils.fromCommandLine();
   packageAddon();
 }
