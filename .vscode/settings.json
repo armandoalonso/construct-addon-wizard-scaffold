@@ -5,7 +5,8 @@
     "generated": true,
     "template": true,
     "node_modules": true,
-    "dist": true,
+    "dist/export": true,
+    "dist/exportStep": true,
     "package-lock.json": true,
     "package.json": true,
     ".vscode": true
