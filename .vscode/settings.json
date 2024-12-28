@@ -1,0 +1,13 @@
+{
+  "javascript.updateImportsOnFileMove.enabled": "never",
+  "files.exclude": {
+    "build": true,
+    "generated": true,
+    "template": true,
+    "node_modules": true,
+    "dist": true,
+    "package-lock.json": true,
+    "package.json": true,
+    ".vscode": true
+  }
+}

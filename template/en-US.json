@@ -1,0 +1,100 @@
+{
+  "languageTag": "en-US",
+  "fileDescription": "Strings for skymen_dedra_sdk_wrapper.",
+  "text": {
+    "plugins": {
+      "skymen_dedra_sdk_wrapper": {
+        "name": "dedra_sdk_wrapper",
+        "description": "Description",
+        "help-url": "https://www.construct.net",
+        "aceCategories": {
+          "category2": "second category",
+          "general": "general"
+        },
+        "properties": {},
+        "actions": {
+          "SampleAction4": {
+            "list-name": "Sample Action",
+            "display-text": "Sample action [i]{0}[/i]",
+            "description": "This is a sample action",
+            "params": {
+              "param1": {
+                "name": "Param 1",
+                "desc": "The first parameter"
+              }
+            }
+          },
+          "SampleAction": {
+            "list-name": "Sample Action",
+            "display-text": "Sample action [i]{0}[/i]",
+            "description": "This is a sample action",
+            "params": {
+              "param1": {
+                "name": "Param 1",
+                "desc": "The first parameter"
+              }
+            }
+          },
+          "SampleAction2": {
+            "list-name": "Sample Action",
+            "display-text": "Sample action [i]{0}[/i]",
+            "description": "This is a sample action",
+            "params": {
+              "param1": {
+                "name": "Param 1",
+                "desc": "The first parameter"
+              }
+            }
+          },
+          "SampleAction3": {
+            "list-name": "Sample Action",
+            "display-text": "Sample action [i]{0}[/i]",
+            "description": "This is a sample action",
+            "params": {
+              "param1": {
+                "name": "Param 1",
+                "desc": "The first parameter"
+              }
+            }
+          }
+        },
+        "conditions": {
+          "SampleCondition3": {
+            "list-name": "Sample Action",
+            "display-text": "Sample action [i]{0}[/i]",
+            "description": "This is a sample action",
+            "params": {
+              "param1": {
+                "name": "Param 1",
+                "desc": "The first parameter"
+              }
+            }
+          },
+          "SampleCondition": {
+            "list-name": "Sample Action",
+            "display-text": "Sample action [i]{0}[/i]",
+            "description": "This is a sample action",
+            "params": {
+              "param1": {
+                "name": "Param 1",
+                "desc": "The first parameter"
+              }
+            }
+          },
+          "SampleConditioncopy": {
+            "list-name": "Sample Action",
+            "display-text": "Sample action [i]{0}[/i]",
+            "description": "This is a sample action",
+            "params": {
+              "param1": {
+                "name": "Param 1",
+                "desc": "The first parameter"
+              }
+            }
+          }
+        },
+        "expressions": {}
+      }
+    }
+  }
+}

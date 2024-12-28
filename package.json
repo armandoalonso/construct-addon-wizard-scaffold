@@ -1,0 +1,16 @@
+{
+  "devDependencies": {
+    "adm-zip": "^0.5.16",
+    "chalk": "^5.4.1",
+    "joi": "^17.13.3",
+    "webpack-cli": "^6.0.1"
+  },
+  "type": "module",
+  "scripts": {
+    "webpackBuildStep": "npx webpack build --config ./webpack_buildstep.config.cjs --stats verbose",
+    "webpackExport": "npx webpack build --config ./webpack_export.config.cjs --stats verbose",
+    "validateAceConfigs": "( cd build && node validateAceConfigs.js )",
+    "generateAceFiles": "( cd build && node generateAceFiles.js )",
+    "build": "( cd build && node build.js )"
+  }
+}
