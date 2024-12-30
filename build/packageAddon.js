@@ -4,7 +4,7 @@ import * as chalkUtils from "./chalkUtils.js";
 import { id, version } from "../config.caw.js";
 import fromConsole from "./fromConsole.js";
 
-export default async function packageAddon() {
+export default function packageAddon() {
   let hadError = false;
 
   chalkUtils.step("Packaging addon");

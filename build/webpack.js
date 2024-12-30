@@ -21,10 +21,10 @@ export default async function exportWebpack(config) {
       console.log(
         stats.toString({
           colors: true,
-          chunks: false,
-          modules: false,
-          children: false,
-          chunkModules: false,
+          chunks: true,
+          modules: true,
+          children: true,
+          chunkModules: true,
           warningsFilter: /export .* was not found in/,
         })
       );

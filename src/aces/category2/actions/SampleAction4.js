@@ -2,7 +2,7 @@ export const config = {
   highlight: true,
   deprecated: false,
   isAsync: false,
-  listName: "Sample Action",
+  listName: "Sample Action 4",
   displayText: "Sample action [i]{0}[/i]",
   description: "This is a sample action",
   params: [

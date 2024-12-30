@@ -3,7 +3,7 @@ import removeDir from "./removeDir.js";
 import { cleanup as config } from "../buildconfig.js";
 import fromConsole from "./fromConsole.js";
 
-export default async function cleanup() {
+export default function cleanup() {
   let hadError = false;
 
   chalkUtils.step("Cleaning up");

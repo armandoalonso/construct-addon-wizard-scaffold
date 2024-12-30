@@ -3,7 +3,8 @@
     "adm-zip": "^0.5.16",
     "chalk": "^5.4.1",
     "joi": "^17.13.3",
-    "webpack-cli": "^6.0.1"
+    "webpack-cli": "^6.0.1",
+    "yocto-spinner": "^0.1.2"
   },
   "type": "module",
   "scripts": {

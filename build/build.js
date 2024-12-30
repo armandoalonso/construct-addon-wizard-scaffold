@@ -1,5 +1,6 @@
 import * as chalkUtils from "./chalkUtils.js";
 import fromConsole from "./fromConsole.js";
+import yoctoSpinner from "yocto-spinner";
 
 const buildSteps = [
   "./validateAddonConfig.js",
@@ -20,9 +21,23 @@ export default async function build() {
     let failed = false;
     try {
       let module = await import(step);
-      failed = await module.default();
+      let promise = module.default();
+      if (promise instanceof Promise) {
+        let spinner = yoctoSpinner({
+          spinner: {
+            interval: 80,
+            frames: ["⢎ ", "⠎⠁", "⠊⠑", "⠈⠱", " ⡱", "⢀⡰", "⢄⡠", "⢆⡀"],
+          },
+        }).start();
+        failed = await promise;
+        spinner.stop();
+      } else {
+        failed = promise;
+      }
     } catch (e) {
-      chalkUtils.uncaughtError(`Error in build step ${step}:\n${e.message}\n`);
+      chalkUtils.uncaughtError(
+        `Error in build step ${step}:\n${e.message}\n${e.stack}`
+      );
       failed = true;
     }
     if (failed) {

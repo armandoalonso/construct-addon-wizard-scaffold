@@ -57,7 +57,7 @@ function addonFromConfig() {
   };
 }
 
-export default async function generateAddonJSON() {
+export default function generateAddonJSON() {
   chalkUtils.step("Generating addon.json");
   const addon = addonFromConfig();
   if (!fs.existsSync("../dist/export")) {

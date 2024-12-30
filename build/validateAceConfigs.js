@@ -57,7 +57,7 @@ function validateAceType(type) {
   }
 }
 
-export default async function validateAce() {
+export default function validateAce() {
   hadError = false;
   chalkUtils.step("Validating ACE configs");
   validateAceType("action");

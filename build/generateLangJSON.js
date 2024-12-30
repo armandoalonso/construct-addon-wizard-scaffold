@@ -171,7 +171,7 @@ function compareLangs(lang, base) {
   return { missing, extra };
 }
 
-export default async function generateLangJSON() {
+export default function generateLangJSON() {
   let hadError = false;
   chalkUtils.step("Generating Language files");
   chalkUtils.subStep(`Generating default lang: ${defaultLanguage}.json`);

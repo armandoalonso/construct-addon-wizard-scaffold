@@ -4,7 +4,7 @@ import * as chalkUtils from "./chalkUtils.js";
 import { info } from "../config.caw.js";
 import fromConsole from "./fromConsole.js";
 
-export default async function validateIcon() {
+export default function validateIcon() {
   let hadError = false;
   chalkUtils.step("Validating icon");
   let icon = info.icon || "icon.svg";

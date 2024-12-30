@@ -14,7 +14,7 @@
         "properties": {},
         "actions": {
           "SampleAction4": {
-            "list-name": "Sample Action",
+            "list-name": "Sample Action 4",
             "display-text": "Sample action [i]{0}[/i]",
             "description": "This is a sample action",
             "params": {

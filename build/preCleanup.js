@@ -2,7 +2,7 @@ import * as chalkUtils from "./chalkUtils.js";
 import removeDir from "./removeDir.js";
 import fromConsole from "./fromConsole.js";
 
-export default async function cleanup() {
+export default function cleanup() {
   let hadError = false;
 
   chalkUtils.step("Cleaning up");

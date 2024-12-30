@@ -3,7 +3,7 @@ import { configSchema } from "./schemas.js";
 import * as addonConfig from "../config.caw.js";
 import fromConsole from "./fromConsole.js";
 
-export default async function validateAddonConfig() {
+export default function validateAddonConfig() {
   let hadError = false;
   chalkUtils.step("Validating addon config");
   const { error } = configSchema.validate(addonConfig, {
