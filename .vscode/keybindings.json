@@ -1,6 +1,0 @@
-[
-  {
-    "key": "f1", // whatever keybinding you want
-    "command": "cawExtension.scaffoldNewProject"
-  }
-]
