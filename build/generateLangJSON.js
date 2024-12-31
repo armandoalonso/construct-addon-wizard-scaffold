@@ -3,14 +3,15 @@ import path from "path";
 import * as chalkUtils from "./chalkUtils.js";
 import config from "../template/addonConfig.js";
 import { properties, aceCategories } from "../config.caw.js";
-import * as actionConfig from "../generated/actionConfig.js";
-import * as conditionConfig from "../generated/conditionConfig.js";
-import * as expressionConfig from "../generated/expressionConfig.js";
 import { failOnMalformedExtraLang } from "../buildconfig.js";
 import fromConsole from "./fromConsole.js";
 import build from "./build.js";
 
 const defaultLanguage = "en-US";
+
+let actionConfig = null;
+let conditionConfig = null;
+let expressionConfig = null;
 
 function getCategories() {
   let categories = [
@@ -172,10 +173,28 @@ function compareLangs(lang, base) {
   return { missing, extra };
 }
 
-export default function generateLangJSON() {
+export default async function generateLangJSON() {
   let hadError = false;
   let hadOptionalError = false;
   let hadTip = false;
+
+  await Promise.all([
+    import("../generated/actionConfig.js"),
+    import("../generated/conditionConfig.js"),
+    import("../generated/expressionConfig.js"),
+  ])
+    .then((modules) => {
+      actionConfig = modules[0];
+      conditionConfig = modules[1];
+      expressionConfig = modules[2];
+    })
+    .catch((e) => {
+      hadError = true;
+      chalkUtils.failed("Failed to import generated config files");
+    });
+  if (hadError) {
+    return { hadError, hadTip, hadOptionalError };
+  }
 
   chalkUtils.step("Generating Language files");
   chalkUtils.subStep(`Generating default lang: ${defaultLanguage}.json`);
