@@ -5,6 +5,7 @@ import yoctoSpinner from "yocto-spinner";
 import { disableTips, disableWarnings } from "../buildconfig.js";
 
 const buildSteps = [
+  "./updateProjectData.js",
   "./validateAddonConfig.js",
   "./generateAceFiles.js",
   "./validateAceConfigs.js",

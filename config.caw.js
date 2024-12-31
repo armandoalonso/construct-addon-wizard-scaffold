@@ -6,7 +6,7 @@ export const version = "1.0.0.0";
 export const author = "skymen";
 export const website = "https://www.construct.net";
 export const documentation = "https://www.construct.net";
-export const description = "Description";
+export const description = "";
 export const category = "general"; // "3d", "data-and-storage", "form-controls", "input", "media", "monetisation", "platform-specific", "web", "other"
 
 export const files = {

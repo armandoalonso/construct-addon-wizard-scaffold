@@ -13,6 +13,8 @@
     "validateAceConfigs": "( cd build && node validateAceConfigs.js )",
     "generateAceFiles": "( cd build && node generateAceFiles.js )",
     "generateLang": "( cd build && node generateLangJSON.js )",
-    "build": "( cd build && node build.js )"
+    "build": "( cd build && node build.js )",
+    "updateProjectData": "( cd build && node updateProjectData.js )",
+    "init": "npm install && npm run updateProjectData"
   }
 }
