@@ -6,6 +6,7 @@ export const cleanup = {
   keepExport: false,
   keepExportStep: false,
   keepGenerated: false,
+  disableTip: false,
 };
 
 export const failOnUnusedFiles = true;

@@ -15,7 +15,12 @@ export default function cleanup() {
 
   chalkUtils.success("Cleaned up");
 
-  if (!config.keepExport && !config.keepExportStep && !config.keepGenerated) {
+  if (
+    !config.keepExport &&
+    !config.keepExportStep &&
+    !config.keepGenerated &&
+    !config.disableTip
+  ) {
     hadTip = chalkUtils._tip(
       `${chalkUtils.tipHighlight(
         "./cleanup.js"
