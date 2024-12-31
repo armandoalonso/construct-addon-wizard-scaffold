@@ -18,6 +18,7 @@ export default function exportProjectData() {
     author,
     addonType,
     iconPath: info.icon || "icon.svg",
+    timeStamp: Date.now(),
   };
 
   fs.writeFileSync("../template/projectData.json", JSON.stringify(projectData));
