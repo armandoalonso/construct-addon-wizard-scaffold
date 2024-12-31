@@ -12,6 +12,7 @@
     "webpackExport": "npx webpack build --config ./webpack_export.config.cjs --stats verbose",
     "validateAceConfigs": "( cd build && node validateAceConfigs.js )",
     "generateAceFiles": "( cd build && node generateAceFiles.js )",
+    "generateLang": "( cd build && node generateLangJSON.js )",
     "build": "( cd build && node build.js )"
   }
 }

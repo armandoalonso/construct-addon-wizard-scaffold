@@ -5,6 +5,7 @@ import fromConsole from "./fromConsole.js";
 
 export default function cleanup() {
   let hadError = false;
+  let hadTip = false;
 
   chalkUtils.step("Cleaning up");
 
@@ -14,7 +15,17 @@ export default function cleanup() {
 
   chalkUtils.success("Cleaned up");
 
-  return hadError;
+  if (!config.keepExport && !config.keepExportStep && !config.keepGenerated) {
+    hadTip = chalkUtils._tip(
+      `${chalkUtils.tipHighlight(
+        "./cleanup.js"
+      )}: To keep intermediate build step files, change ${chalkUtils.tipHighlight(
+        "cleanup"
+      )} settings in the build config.`
+    );
+  }
+
+  return { hadError, hadTip };
 }
 
 // if is being called from the command line

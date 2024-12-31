@@ -7,3 +7,9 @@ export const cleanup = {
   keepExportStep: false,
   keepGenerated: false,
 };
+
+export const failOnUnusedFiles = true;
+
+export const disableTips = false;
+
+export const disableWarnings = false;

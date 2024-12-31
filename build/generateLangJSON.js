@@ -8,6 +8,7 @@ import * as conditionConfig from "../generated/conditionConfig.js";
 import * as expressionConfig from "../generated/expressionConfig.js";
 import { failOnMalformedExtraLang } from "../buildconfig.js";
 import fromConsole from "./fromConsole.js";
+import build from "./build.js";
 
 const defaultLanguage = "en-US";
 
@@ -173,6 +174,9 @@ function compareLangs(lang, base) {
 
 export default function generateLangJSON() {
   let hadError = false;
+  let hadOptionalError = false;
+  let hadTip = false;
+
   chalkUtils.step("Generating Language files");
   chalkUtils.subStep(`Generating default lang: ${defaultLanguage}.json`);
   const lang = langFromConfig();
@@ -203,9 +207,7 @@ export default function generateLangJSON() {
       const { missing, extra } = compareLangs(lang, langFromConfig());
       if (missing.length > 0 || extra.length > 0) {
         chalkUtils.failed(`${file} is malformed`);
-        if (failOnMalformedExtraLang) {
-          hadError = true;
-        }
+        hadOptionalError = true;
       }
       if (missing.length > 0) {
         chalkUtils.errorList("missing keys", missing);
@@ -229,6 +231,18 @@ export default function generateLangJSON() {
       chalkUtils.newLine();
     });
 
+    if (failOnMalformedExtraLang && hadOptionalError) {
+      hadError = true;
+      hadOptionalError = false;
+      hadTip = chalkUtils._tip(
+        `${chalkUtils.tipHighlight(
+          "./generateLangJSON.js"
+        )}: To prevent the build from failing due to malformed extra language files, set ${chalkUtils.tipHighlight(
+          "failOnMalformedExtraLang"
+        )} in the build config.`
+      );
+    }
+
     if (hadError) {
       chalkUtils.failed("Extra language(s) malformed");
     } else {
@@ -236,11 +250,12 @@ export default function generateLangJSON() {
     }
   }
 
-  return hadError;
+  return { hadError, hadTip, hadOptionalError };
 }
 
 // if is being called from the command line
 if (fromConsole(import.meta.url)) {
   chalkUtils.fromCommandLine();
-  generateLangJSON();
+  const dependsOn = ["./generateAceFiles.js"];
+  build(dependsOn).then(() => generateLangJSON());
 }
