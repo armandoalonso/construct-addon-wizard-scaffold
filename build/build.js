@@ -5,16 +5,19 @@ import yoctoSpinner from "yocto-spinner";
 import { disableTips, disableWarnings } from "../buildconfig.js";
 
 const buildSteps = [
+  "./preCleanup.js",
   "./updateProjectData.js",
   "./validateAddonConfig.js",
   "./generateAceFiles.js",
   "./validateAceConfigs.js",
   "./buildstepWebpack.js",
+  "./generateAcesJSON.js",
   "./generateAddonJSON.js",
   "./generateLangJSON.js",
   "./exportWebpack.js",
   "./processDependencies.js",
   "./validateIcon.js",
+  "./generateEmptyFiles.js",
   "./packageAddon.js",
   "./cleanup.js",
 ];
@@ -23,6 +26,7 @@ export default async function build(buildSteps) {
   let tips = [];
   let optionalErrors = [];
   let hadError = false;
+  let spinner = null;
 
   for (let i = 0; i < buildSteps.length; i++) {
     const step = buildSteps[i];
@@ -31,7 +35,7 @@ export default async function build(buildSteps) {
       let module = await import(step);
       let promise = module.default();
       if (promise instanceof Promise) {
-        let spinner = yoctoSpinner({
+        spinner = yoctoSpinner({
           spinner: {
             interval: 80,
             frames: ["⢎ ", "⠎⠁", "⠊⠑", "⠈⠱", " ⡱", "⢀⡰", "⢄⡠", "⢆⡀"],
@@ -39,6 +43,7 @@ export default async function build(buildSteps) {
         }).start();
         failed = await promise;
         spinner.stop();
+        spinner = null;
       } else {
         failed = promise;
       }
@@ -47,6 +52,8 @@ export default async function build(buildSteps) {
         `Error in build step ${step}:\n${e.message}\n${e.stack}`
       );
       failed = true;
+      spinner.stop();
+      spinner = null;
     }
     if (typeof failed !== "boolean") {
       let failedObject = {
@@ -107,10 +114,10 @@ export default async function build(buildSteps) {
   if (hadError) {
     chalkUtils.newLine();
     chalkUtils.failed(`Build failed`);
-    return;
+  } else {
+    chalkUtils.successBlue("Build successful!");
   }
-
-  chalkUtils.successBlue("Build successful!");
+  return hadError;
 }
 
 if (fromConsole(import.meta.url)) {

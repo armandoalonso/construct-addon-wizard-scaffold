@@ -56,7 +56,7 @@ const commonSchema = {
   deprecated: Joi.boolean().default(false),
   listName: Joi.string().required(),
   displayText: Joi.string().required(),
-  description: Joi.string().required(),
+  description: Joi.string().required().allow(""),
   params: Joi.array().items(paramSchema).default([]),
 };
 
@@ -89,7 +89,7 @@ const expressionSchema = Joi.object({
   deprecated: Joi.boolean().default(false),
   returnType: Joi.string().required().valid("number", "string", "any"),
   isVariadicParameters: Joi.boolean().default(false),
-  description: Joi.string().required(),
+  description: Joi.string().required().allow(""),
   params: Joi.array().items(expressionParamSchema).default([]),
 });
 

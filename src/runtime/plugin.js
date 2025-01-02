@@ -1,5 +1,7 @@
-export default class extends globalThis.ISDKPluginBase {
-  constructor() {
-    super();
-  }
+export default function (parentClass) {
+  return class extends parentClass {
+    constructor() {
+      super();
+    }
+  };
 }

@@ -1,16 +1,17 @@
-export const addonType = "plugin";
-export const type = "object"; // world, object, dom
+import { ADDON_CATEGORY, ADDON_TYPE, PLUGIN_TYPE } from "./template/enums.js";
+export const addonType = ADDON_TYPE.PLUGIN;
+export const type = PLUGIN_TYPE.OBJECT;
 export const id = "skymen_dedra_sdk_wrapper";
 export const name = "dedra_sdk_wrapper";
 export const version = "1.0.0.0";
 export const author = "skymen";
 export const website = "https://www.construct.net";
 export const documentation = "https://www.construct.net";
-export const description = "";
-export const category = "general"; // "3d", "data-and-storage", "form-controls", "input", "media", "monetisation", "platform-specific", "web", "other"
+export const description = "Description";
+export const category = ADDON_CATEGORY.GENERAL; // "3d", "data-and-storage", "form-controls", "input", "media", "monetisation", "platform-specific", "web", "other"
 
 export const files = {
-  domSideScripts: [],
+  domSideScripts: ["domside.js"],
   extensionScript: {},
   fileDependencies: [],
 };

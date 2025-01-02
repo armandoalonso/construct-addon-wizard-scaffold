@@ -77,11 +77,19 @@ export function successBlue(message) {
 }
 
 export function step(message) {
-  console.log(chalk.bold.blue.inverse(` ◼  ${message} \n`));
+  console.log(chalk.blue.bold.inverse(` ◼  ${message} \n`));
 }
 
 export function subStep(message) {
   console.log(chalk.blue.bold(` ◼  ${message}\n`));
+}
+
+export function info(message) {
+  console.log(chalk.blue.italic(message));
+}
+
+export function infoHighlight(message) {
+  return chalk.blue.bold.underline(message);
 }
 
 export function subSuccess(message, after = "") {

@@ -6,6 +6,7 @@ import {
   author,
   category,
   info,
+  files,
   properties,
 } from "../config.caw.js";
 
@@ -17,5 +18,6 @@ export default {
   author,
   category,
   info,
+  files,
   properties,
 };

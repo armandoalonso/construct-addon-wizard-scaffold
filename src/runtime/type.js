@@ -1,7 +1,9 @@
-export default class extends globalThis.ISDKObjectTypeBase {
-  constructor() {
-    super();
-  }
+export default function (parentClass) {
+  return class extends parentClass {
+    constructor() {
+      super();
+    }
 
-  _onCreate() {}
+    _onCreate() {}
+  };
 }

@@ -1,6 +1,6 @@
-import Plugin from "../src/runtime/plugin.js";
-import Type from "../src/runtime/type.js";
-import Instance from "../src/runtime/instance.js";
+import createPlugin from "../src/runtime/plugin.js";
+import createType from "../src/runtime/type.js";
+import createInstance from "../src/runtime/instance.js";
 import runtimeConfig from "../template/runtimeConfig.js";
 import {
   exposed as exposedActs,
@@ -15,12 +15,37 @@ import {
   unexposed as Exps,
 } from "../generated/expressions.js";
 
-Instance.prototype = {
-  ...Instance.prototype,
-  ...exposedActs,
-  ...exposedCnds,
-  ...exposedExps,
+const pluginBaseClasses = {
+  object: globalThis.ISDKPluginBase,
+  world: globalThis.ISDKPluginBase,
+  dom: globalThis.ISDKDOMPluginBase,
 };
+
+const baseClass = {
+  plugin: pluginBaseClasses[runtimeConfig.type],
+  behavior: globalThis.ISDKBehaviorBase,
+};
+
+const typeClass = {
+  plugin: globalThis.ISDKObjectTypeBase,
+  behavior: globalThis.ISDKBehaviorTypeBase,
+};
+
+const pluginInstanceClass = {
+  object: globalThis.ISDKInstanceBase,
+  world: globalThis.ISDKWorldInstanceBase,
+  dom: globalThis.ISDKDOMInstanceBase,
+};
+
+const instanceClass = {
+  plugin: pluginInstanceClass[runtimeConfig.type],
+  behavior: globalThis.ISDKBehaviorInstanceBase,
+};
+
+const Instance = createInstance(instanceClass[runtimeConfig.addonType]);
+Object.assign(Instance.prototype, exposedActs);
+Object.assign(Instance.prototype, exposedCnds);
+Object.assign(Instance.prototype, exposedExps);
 
 const AddonTypeMap = {
   plugin: "Plugins",
@@ -32,6 +57,6 @@ globalThis.C3[AddonTypeMap[runtimeConfig.addonType]][runtimeConfig.id] = {
   Cnds,
   Exps,
   Instance,
-  Type,
-  Plugin,
+  Type: createType(typeClass[runtimeConfig.addonType]),
+  Plugin: createPlugin(baseClass[runtimeConfig.addonType]),
 };

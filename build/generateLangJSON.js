@@ -6,6 +6,8 @@ import { properties, aceCategories } from "../config.caw.js";
 import { failOnMalformedExtraLang } from "../buildconfig.js";
 import fromConsole from "./fromConsole.js";
 import build from "./build.js";
+import getCategories from "./getCategories.js";
+import getAceConfigs from "./getAceConfigs.js";
 
 const defaultLanguage = "en-US";
 
@@ -13,18 +15,13 @@ let actionConfig = null;
 let conditionConfig = null;
 let expressionConfig = null;
 
-function getCategories() {
-  let categories = [
-    ...new Set([
-      ...Object.values(actionConfig.categories),
-      ...Object.values(conditionConfig.categories),
-      ...Object.values(expressionConfig.categories),
-    ]),
-  ];
+function formatCategories() {
   let categoriesObj = {};
-  categories.forEach((category) => {
-    categoriesObj[category] = aceCategories[category] ?? category;
-  });
+  getCategories(actionConfig, conditionConfig, expressionConfig).forEach(
+    (category) => {
+      categoriesObj[category] = aceCategories[category] ?? category;
+    }
+  );
   return categoriesObj;
 }
 
@@ -55,7 +52,7 @@ function langFromConfig() {
   root.name = config.name;
   root.description = config.description;
   root["help-url"] = config.documentation;
-  root.aceCategories = getCategories();
+  root.aceCategories = formatCategories();
   root.properties = {};
   properties.forEach((property) => {
     root.properties[property.id] = {
@@ -178,11 +175,10 @@ export default async function generateLangJSON() {
   let hadOptionalError = false;
   let hadTip = false;
 
-  await Promise.all([
-    import("../generated/actionConfig.js"),
-    import("../generated/conditionConfig.js"),
-    import("../generated/expressionConfig.js"),
-  ])
+  chalkUtils.step("Generating Language files");
+  chalkUtils.subStep(`Getting ace configs from generated files`);
+
+  await getAceConfigs()
     .then((modules) => {
       actionConfig = modules[0];
       conditionConfig = modules[1];
@@ -195,8 +191,6 @@ export default async function generateLangJSON() {
   if (hadError) {
     return { hadError, hadTip, hadOptionalError };
   }
-
-  chalkUtils.step("Generating Language files");
   chalkUtils.subStep(`Generating default lang: ${defaultLanguage}.json`);
   const lang = langFromConfig();
   if (!fs.existsSync("../dist/export/lang")) {
@@ -274,7 +268,9 @@ export default async function generateLangJSON() {
 
 // if is being called from the command line
 if (fromConsole(import.meta.url)) {
-  chalkUtils.fromCommandLine();
-  const dependsOn = ["./generateAceFiles.js"];
-  build(dependsOn).then(() => generateLangJSON());
+  const dependsOn = ["./generateAceFiles.js", "./validateAceConfigs.js"];
+  build(dependsOn).then((hadError) => {
+    if (hadError) return;
+    generateLangJSON();
+  });
 }

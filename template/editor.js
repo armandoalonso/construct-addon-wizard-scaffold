@@ -1,7 +1,7 @@
 import createInstanceClass from "../src/editor/instance.js";
 import createPluginClass from "../template/plugin.js";
-import typeClass from "../src/editor/instance.js";
-import PLUGIN_INFO from "../template/editorConfig.js";
+import createTypeClass from "../src/editor/type.js";
+import ADDON_INFO from "../template/editorConfig.js";
 const SDK = self.SDK;
 
 const AddonTypeMap = {
@@ -9,17 +9,37 @@ const AddonTypeMap = {
   behavior: "Behaviors",
 };
 
-const SDKType = AddonTypeMap[PLUGIN_INFO.addonType];
+const SDKType = SDK[AddonTypeMap[ADDON_INFO.addonType]];
 
-SDKType[PLUGIN_INFO.id] = createPluginClass(PLUGIN_INFO);
-const P_C = SDKType[PLUGIN_INFO.id];
-P_C.Register(PLUGIN_INFO.id, P_C);
+const baseClass = {
+  plugin: SDK.IPluginBase,
+  behavior: SDK.IBehaviorBase,
+};
 
-P_C.Type = typeClass;
+const typeClass = {
+  plugin: SDK.ITypeBase,
+  behavior: SDK.IBehaviorTypeBase,
+};
 
-const instanceParentClasses = {
+const pluginInstanceParentClass = {
   object: SDK.IInstanceBase,
   world: SDK.IWorldInstanceBase,
   dom: SDK.IWorldInstanceBase,
 };
-P_C.Instance = createInstanceClass(instanceParentClasses[PLUGIN_INFO.type]);
+
+const instanceClass = {
+  plugin: pluginInstanceParentClass[ADDON_INFO.type],
+  behavior: SDK.IBehaviorInstanceBase,
+};
+
+SDKType[ADDON_INFO.id] = createPluginClass(
+  ADDON_INFO,
+  baseClass[ADDON_INFO.addonType]
+);
+const AddonClass = SDKType[ADDON_INFO.id];
+AddonClass.Register(ADDON_INFO.id, AddonClass);
+
+AddonClass.Type = createTypeClass(typeClass[ADDON_INFO.addonType]);
+
+AddonClass.Instance = createInstanceClass(instanceClass[ADDON_INFO.addonType]);
+console.log(AddonClass);

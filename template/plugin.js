@@ -1,6 +1,6 @@
 const SDK = globalThis.SDK;
-export default function (PLUGIN_INFO) {
-  return class extends SDK.IPluginBase {
+export default function (PLUGIN_INFO, parentClass) {
+  return class extends parentClass {
     constructor() {
       super(PLUGIN_INFO.id);
       SDK.Lang.PushContext("plugins." + PLUGIN_INFO.id.toLowerCase());
@@ -12,6 +12,7 @@ export default function (PLUGIN_INFO) {
         PLUGIN_INFO.type === "object" ? "object" : "world"
       );
       this._info.SetHelpUrl(self.lang(".help-url"));
+      this._info.SetRuntimeModuleMainScript("c3runtime/plugin.js");
       if (PLUGIN_INFO.info.icon) {
         this._info.SetIcon(
           PLUGIN_INFO.info.icon,
