@@ -6,6 +6,7 @@ import fromConsole from "./fromConsole.js";
 import build from "./build.js";
 import * as chalkUtils from "./chalkUtils.js";
 import { basePort } from "../devConfig.js";
+import path from "path";
 
 const buildSteps = [
   "./preCleanup.js",
@@ -18,20 +19,27 @@ const buildSteps = [
   "./generateAddonJSON.js",
   "./generateLangJSON.js",
   "./exportWebpack.js",
+  "./buildDomside.js",
   "./processDependencies.js",
   "./validateIcon.js",
   "./generateEmptyFiles.js",
 ];
 
 let port = basePort;
-const path = () => `http://localhost:${port}/addon.json`;
+const localHostURL = () => `http://localhost:${port}/addon.json`;
+let buildRunning = false;
 
 export default async function dev() {
   // Execute build command
   const runBuild = () => {
+    if (buildRunning) return;
+    buildRunning = true;
     build(buildSteps).then((hadError) => {
+      buildRunning = false;
       if (hadError) return;
-      chalkUtils.info(`Addon served at:\n${chalkUtils.infoHighlight(path())}`);
+      chalkUtils.info(
+        `Addon served at:\n${chalkUtils.infoHighlight(localHostURL())}`
+      );
     });
   };
 
@@ -42,7 +50,7 @@ export default async function dev() {
   // log pwd
   console.log(process.cwd());
   const watcher = chokidar.watch(["../src", "../config.caw.js"], {
-    ignored: /^([.][^.\/\\])|([\/\\]+[.][^.])/,
+    ignored: [/^([.][^.\/\\])|([\/\\]+[.][^.])/],
     persistent: true,
   });
 

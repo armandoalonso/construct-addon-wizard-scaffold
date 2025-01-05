@@ -1,7 +1,7 @@
 import webpack from "webpack";
 import * as chalkUtils from "./chalkUtils.js";
 
-export default async function exportWebpack(config) {
+export default async function doWebpack(config) {
   let hadError = false;
   await new Promise((resolve) => {
     webpack(config, (err, stats) => {

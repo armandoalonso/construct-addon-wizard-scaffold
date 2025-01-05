@@ -69,7 +69,14 @@ export default function (PLUGIN_INFO, parentClass) {
       SDK.Lang.PushContext(".properties");
       this._info.SetProperties(
         (PLUGIN_INFO.properties || []).map(
-          (prop) => new SDK.PluginProperty(prop.type, prop.id, prop.options)
+          (prop) =>
+            new SDK.PluginProperty(prop.type, prop.id, {
+              ...prop.options,
+              items:
+                prop.type === "combo" && prop.options.items
+                  ? prop.options.items.map((i) => Object.keys(i)[0])
+                  : undefined,
+            })
         )
       );
       SDK.Lang.PopContext(); // .properties

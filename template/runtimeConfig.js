@@ -1,7 +1,8 @@
-import { addonType, type, id } from "../config.caw.js";
+import { addonType, type, id, hasDomside } from "../config.caw.js";
 
 export default {
   addonType,
   type,
   id,
+  hasDomside,
 };

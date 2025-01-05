@@ -11,9 +11,5 @@ export default function (instanceClass) {
     OnPlacedInLayout() {}
 
     OnPropertyChanged(id, value) {}
-
-    LoadC2Property(name, valueString) {
-      return false; // not handled
-    }
   };
 }

@@ -1,8 +1,8 @@
 import { ADDON_CATEGORY, ADDON_TYPE, PLUGIN_TYPE } from "./template/enums.js";
 export const addonType = ADDON_TYPE.PLUGIN;
 export const type = PLUGIN_TYPE.OBJECT;
-export const id = "skymen_dedra_sdk_wrapper";
-export const name = "dedra_sdk_wrapper";
+export const id = "sample_addon";
+export const name = "Sample Addon";
 export const version = "1.0.0.0";
 export const author = "skymen";
 export const website = "https://www.construct.net";
@@ -16,10 +16,10 @@ export const files = {
   fileDependencies: [],
 };
 
+export const hasDomside = true;
+
 // categories that are not filled will use the folder name
-export const aceCategories = {
-  category2: "second category",
-};
+export const aceCategories = {};
 
 export const info = {
   // icon: "icon.svg",

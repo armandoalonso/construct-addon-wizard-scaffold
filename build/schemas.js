@@ -117,44 +117,52 @@ const propertySchema = Joi.object({
   desc: Joi.string().required(),
 
   options: Joi.object({
-    initialValue: Joi.alternatives()
-      .try(Joi.number(), Joi.string(), Joi.boolean())
-      .optional(),
+    initialValue: Joi.when("...type", {
+      switch: [
+        {
+          is: Joi.valid("integer", "float", "percent"),
+          then: Joi.number().required(),
+        },
+        {
+          is: Joi.valid("text", "longtext"),
+          then: Joi.string().required().allow(""),
+        },
+        { is: "check", then: Joi.boolean().required() },
+        { is: "combo", then: Joi.string().required() },
+        {
+          is: "color",
+          then: Joi.array()
+            .required()
+            .length(3)
+            .items(Joi.number().min(0).max(1)),
+        },
+      ],
+      otherwise: Joi.any().forbidden(),
+    }),
   })
     .required()
-    .when(Joi.object({ type: Joi.string().valid("combo") }).unknown(), {
+    .when("type", {
+      is: "combo",
       then: Joi.object({
-        initialValue: Joi.string().required(),
         items: Joi.array().items(Joi.object().length(1)).required(),
       }),
     })
-    .when(
-      Joi.object({
-        type: Joi.string().valid("integer", "float", "percent"),
-      }).unknown(),
-      {
-        then: Joi.object({
-          initialValue: Joi.number().required(),
-          minValue: Joi.number().optional(),
-          maxValue: Joi.number().optional(),
-          dragSpeedMultiplier: Joi.number().optional(),
-        }),
-      }
-    )
-    .when(Joi.object({ type: Joi.string().valid("object") }).unknown(), {
+    .when("type", {
+      is: Joi.string().valid("integer", "float", "percent"),
+      then: Joi.object({
+        minValue: Joi.number().optional(),
+        maxValue: Joi.number().optional(),
+        dragSpeedMultiplier: Joi.number().optional(),
+      }),
+    })
+    .when("type", {
+      is: "object",
       then: Joi.object({
         allowedPluginIds: Joi.array().items(Joi.string()).required(),
       }),
     })
-    .when(Joi.object({ type: Joi.string().valid("color") }).unknown(), {
-      then: Joi.object({
-        initialValue: Joi.array()
-          .required()
-          .length(3)
-          .items(Joi.number().min(0).max(1)),
-      }),
-    })
-    .when(Joi.object({ type: Joi.string().valid("link") }).unknown(), {
+    .when("type", {
+      is: "link",
       then: Joi.object({
         linkCallback: Joi.function().required(),
         linkText: Joi.string().required(),
@@ -163,30 +171,27 @@ const propertySchema = Joi.object({
           .valid("for-each-instance", "once-for-type"),
       }),
     })
-    .when(Joi.object({ type: Joi.string().valid("info") }).unknown(), {
+    .when("type", {
+      is: "info",
       then: Joi.object({
         infoCallback: Joi.function().required(),
       }),
     })
-    .when(
-      Joi.object({
-        type: Joi.string().valid(
-          "integer",
-          "float",
-          "percent",
-          "text",
-          "longtext",
-          "check",
-          "combo",
-          "color"
-        ),
-      }).unknown(),
-      {
-        then: Joi.object({
-          interpolatable: Joi.boolean().default(false),
-        }),
-      }
-    ),
+    .when("type", {
+      is: Joi.string().valid(
+        "integer",
+        "float",
+        "percent",
+        "text",
+        "longtext",
+        "check",
+        "combo",
+        "color"
+      ),
+      then: Joi.object({
+        interpolatable: Joi.boolean().default(false),
+      }),
+    }),
 });
 
 const configSchema = Joi.object({
@@ -201,6 +206,7 @@ const configSchema = Joi.object({
   website: Joi.string().required(),
   documentation: Joi.string().required(),
   description: Joi.string().required(),
+  hasDomside: Joi.boolean().required(),
   category: Joi.string()
     .required()
     .valid(

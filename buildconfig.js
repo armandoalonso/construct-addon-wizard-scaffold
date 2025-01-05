@@ -1,11 +1,11 @@
 // Fail if language files in extra lang are missing keys or have extra keys
-export const failOnMalformedExtraLang = true;
+export const failOnMalformedExtraLang = false;
 
 // Post build cleanup configuration
 export const cleanup = {
-  keepExport: false,
+  keepExport: true,
   keepExportStep: false,
-  keepGenerated: false,
+  keepGenerated: true,
   disableTip: false,
 };
 

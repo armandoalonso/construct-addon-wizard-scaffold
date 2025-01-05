@@ -42,7 +42,17 @@ const instanceClass = {
   behavior: globalThis.ISDKBehaviorInstanceBase,
 };
 
-const Instance = createInstance(instanceClass[runtimeConfig.addonType]);
+const Instance = createInstance(
+  class extends instanceClass[runtimeConfig.addonType] {
+    constructor() {
+      if (runtimeConfig.hasDomside) {
+        super({ domComponentId: runtimeConfig.id });
+      } else {
+        super();
+      }
+    }
+  }
+);
 Object.assign(Instance.prototype, exposedActs);
 Object.assign(Instance.prototype, exposedCnds);
 Object.assign(Instance.prototype, exposedExps);

@@ -15,6 +15,7 @@ const buildSteps = [
   "./generateAddonJSON.js",
   "./generateLangJSON.js",
   "./exportWebpack.js",
+  "./buildDomside.js",
   "./processDependencies.js",
   "./validateIcon.js",
   "./generateEmptyFiles.js",
@@ -42,8 +43,10 @@ export default async function build(buildSteps) {
           },
         }).start();
         failed = await promise;
-        spinner.stop();
-        spinner = null;
+        if (spinner) {
+          spinner.stop();
+          spinner = null;
+        }
       } else {
         failed = promise;
       }
@@ -52,8 +55,10 @@ export default async function build(buildSteps) {
         `Error in build step ${step}:\n${e.message}\n${e.stack}`
       );
       failed = true;
-      spinner.stop();
-      spinner = null;
+      if (spinner) {
+        spinner.stop();
+        spinner = null;
+      }
     }
     if (typeof failed !== "boolean") {
       let failedObject = {
