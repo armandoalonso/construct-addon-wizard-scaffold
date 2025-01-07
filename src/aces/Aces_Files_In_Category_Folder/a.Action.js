@@ -1,9 +1,9 @@
 export const config = {
-  highlight: true,
+  highlight: false,
   deprecated: false,
   isAsync: false,
   listName: "Sample Action",
-  displayText: "Sample Action",
+  displayText: "Sample Action {0}",
   description: "This is a sample action",
   params: [
     {
@@ -16,14 +16,8 @@ export const config = {
   ],
 };
 
-export const expose = false;
+export const expose = true;
 
 export default function (param) {
-  console.log(param);
-  return new Promise((resolve, reject) => {
-    setTimeout(() => {
-      console.log("Sample Action");
-      resolve();
-    }, 1000);
-  });
+  console.log("Sample Action", param);
 }

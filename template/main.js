@@ -1,5 +1,6 @@
 import createPlugin from "../src/runtime/plugin.js";
 import createType from "../src/runtime/type.js";
+import enums from "../generated/enums.js";
 import createInstance from "../src/runtime/instance.js";
 import runtimeConfig from "../template/runtimeConfig.js";
 import {
@@ -57,6 +58,9 @@ Object.assign(Instance.prototype, exposedActs);
 Object.assign(Instance.prototype, exposedCnds);
 Object.assign(Instance.prototype, exposedExps);
 
+const Type = createType(typeClass[runtimeConfig.addonType]);
+Object.assign(Type.prototype, enums);
+
 const AddonTypeMap = {
   plugin: "Plugins",
   behavior: "Behaviors",
@@ -67,6 +71,6 @@ globalThis.C3[AddonTypeMap[runtimeConfig.addonType]][runtimeConfig.id] = {
   Cnds,
   Exps,
   Instance,
-  Type: createType(typeClass[runtimeConfig.addonType]),
+  Type,
   Plugin: createPlugin(baseClass[runtimeConfig.addonType]),
 };

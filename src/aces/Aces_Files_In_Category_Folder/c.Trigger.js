@@ -1,5 +1,5 @@
 export const config = {
-  highlight: true,
+  highlight: false,
   deprecated: false,
   isTrigger: true,
   listName: "Sample Trigger",
@@ -10,6 +10,6 @@ export const config = {
 
 export const expose = true;
 
-export default function (param) {
+export default function () {
   return true;
 }

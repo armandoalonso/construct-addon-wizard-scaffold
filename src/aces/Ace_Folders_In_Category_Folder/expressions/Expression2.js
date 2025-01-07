@@ -1,13 +1,13 @@
 export const config = {
-  highlight: true,
+  highlight: false,
   deprecated: false,
-  returnType: "number",
+  returnType: "string",
   description: "Sample Expression",
   params: [],
 };
 
-export const expose = false;
+export const expose = true;
 
 export default function () {
-  return 1002;
+  return ":)";
 }

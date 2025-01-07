@@ -5,7 +5,7 @@ export const failOnMalformedExtraLang = true;
 export const cleanup = {
   keepExport: false,
   keepExportStep: false,
-  keepGenerated: false,
+  keepGenerated: true,
   disableTip: false,
 };
 

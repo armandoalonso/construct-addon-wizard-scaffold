@@ -5,6 +5,40 @@ import camelCasify from "./camelCasify.js";
 import fromConsole from "./fromConsole.js";
 
 let hadError = false;
+
+const shorthandMap = {
+  actions: ["a", "action", "act"],
+  conditions: ["c", "condition", "cnd"],
+  expressions: ["e", "expression", "exp"],
+};
+
+function processNewACEFileFormatInCategory(
+  basePath,
+  category,
+  type,
+  collection,
+  nameSet
+) {
+  fs.readdirSync(basePath).forEach((file) => {
+    if (!file.endsWith(".js")) return;
+    if (!shorthandMap[type].includes(file.split(".")[0])) return;
+    const name = camelCasify(file.split(".")[1]);
+    chalkUtils.action("  Processing", `${category}/${type}/${name}`);
+    if (nameSet.has(name)) {
+      chalkUtils.error(
+        `Duplicate ${type} name: ${chalkUtils._errorUnderline(name)}`
+      );
+      hadError = true;
+    }
+    nameSet.add(name);
+    collection.push({
+      category,
+      name,
+      filepath: path.join(basePath, file).replace(/\\/g, "/"),
+    });
+  });
+}
+
 function processACEInCategory(basePath, category, type, collection, nameSet) {
   const typePath = path.join(basePath, type);
   if (!fs.existsSync(typePath)) return;
@@ -19,20 +53,33 @@ function processACEInCategory(basePath, category, type, collection, nameSet) {
       hadError = true;
     }
     nameSet.add(name);
-    collection.push({ category, name });
+    collection.push({
+      category,
+      name,
+      filepath: path.join(typePath, file).replace(/\\/g, "/"),
+    });
   });
 }
 
-async function getExposeValue(type, collection) {
+async function getExposeValue(collection, exposedNameSet) {
   for (const ace of collection) {
-    const { category, name } = ace;
-    const aceModule = await import(
-      `../src/aces/${category}/${type}/${name}.js`
-    );
+    let { filepath } = ace;
+    // use the correct slash for imports
+    const aceModule = await import(filepath);
     if (aceModule.expose === undefined) {
       ace.expose = true;
     } else {
       ace.expose = !!aceModule.expose;
+    }
+
+    if (ace.expose) {
+      if (exposedNameSet.has(ace.name)) {
+        chalkUtils.error(
+          `Duplicate exposed name: ${chalkUtils._errorUnderline(ace.name)}`
+        );
+        hadError = true;
+      }
+      exposedNameSet.add(ace.name);
     }
   }
 }
@@ -40,8 +87,8 @@ async function getExposeValue(type, collection) {
 function generateJS(type, collection) {
   let jsCode = "import forward from './forward.js';\n";
   for (const ace of collection) {
-    const { category, name } = ace;
-    jsCode += `import ${name} from "../src/aces/${category}/${type}/${name}.js";\n`;
+    const { name, filepath } = ace;
+    jsCode += `import ${name} from "${filepath}";\n`;
   }
 
   jsCode += `\nexport const exposed = {`;
@@ -60,6 +107,13 @@ function generateJS(type, collection) {
     else jsCode += `${name}: forward("${name}"),`;
   }
 
+  jsCode += `};\n\nexport const all = {`;
+
+  for (const ace of collection) {
+    const { name } = ace;
+    jsCode += `${name},`;
+  }
+
   jsCode += `};`;
   return jsCode;
 }
@@ -67,8 +121,8 @@ function generateJS(type, collection) {
 function generateConfigJs(type, collection) {
   let jsCode = "";
   for (const ace of collection) {
-    const { category, name } = ace;
-    jsCode += `import { config as ${name}} from "../src/aces/${category}/${type}/${name}.js";\n`;
+    const { name, filepath } = ace;
+    jsCode += `import { config as ${name}} from "${filepath}";\n`;
   }
 
   jsCode += "\nexport const config = {";
@@ -87,9 +141,15 @@ function generateConfigJs(type, collection) {
   return jsCode;
 }
 
-async function generateAndWrite(type, collection, jsPath, configPath) {
+async function generateAndWrite(
+  type,
+  collection,
+  jsPath,
+  configPath,
+  exposedNameSet
+) {
   chalkUtils.action("  Writing", type, "files");
-  await getExposeValue(type, collection);
+  await getExposeValue(collection, exposedNameSet);
   fs.writeFileSync(jsPath, generateJS(type, collection));
   fs.writeFileSync(configPath, generateConfigJs(type, collection));
 }
@@ -97,7 +157,7 @@ async function generateAndWrite(type, collection, jsPath, configPath) {
 export default async function generateAceFiles() {
   chalkUtils.step("Generating ACE files");
   hadError = false;
-  const acesDir = "../src/aces";
+  const acesDirs = ["../src/aces", "../generated/aces"];
   const generatedDir = "../generated";
   const actions = [];
   const conditions = [];
@@ -108,13 +168,43 @@ export default async function generateAceFiles() {
   const actSet = new Set();
   const cndSet = new Set();
   const expSet = new Set();
-  fs.readdirSync(acesDir).forEach((category) => {
-    const catPath = path.join(acesDir, category);
-    if (!fs.statSync(catPath).isDirectory()) return;
-    processACEInCategory(catPath, category, "actions", actions, actSet);
-    processACEInCategory(catPath, category, "conditions", conditions, cndSet);
-    processACEInCategory(catPath, category, "expressions", expressions, expSet);
-  });
+  for (const acesDir of acesDirs) {
+    if (!fs.existsSync(acesDir)) continue;
+    fs.readdirSync(acesDir).forEach((category) => {
+      const catPath = path.join(acesDir, category);
+      if (!fs.statSync(catPath).isDirectory()) return;
+      processACEInCategory(catPath, category, "actions", actions, actSet);
+      processNewACEFileFormatInCategory(
+        catPath,
+        category,
+        "actions",
+        actions,
+        actSet
+      );
+      processACEInCategory(catPath, category, "conditions", conditions, cndSet);
+      processNewACEFileFormatInCategory(
+        catPath,
+        category,
+        "conditions",
+        conditions,
+        cndSet
+      );
+      processACEInCategory(
+        catPath,
+        category,
+        "expressions",
+        expressions,
+        expSet
+      );
+      processNewACEFileFormatInCategory(
+        catPath,
+        category,
+        "expressions",
+        expressions,
+        expSet
+      );
+    });
+  }
 
   chalkUtils.newLine();
   chalkUtils.success("Done processing");
@@ -142,20 +232,28 @@ export default async function generateAceFiles() {
     return this[name](...args);
   };\n}`
   );
-
+  const exposedNameSet = new Set();
   await Promise.all([
-    generateAndWrite("actions", actions, actionsJsPath, actionConfigJsPath),
+    generateAndWrite(
+      "actions",
+      actions,
+      actionsJsPath,
+      actionConfigJsPath,
+      exposedNameSet
+    ),
     generateAndWrite(
       "conditions",
       conditions,
       conditionsJsPath,
-      conditionConfigJsPath
+      conditionConfigJsPath,
+      exposedNameSet
     ),
     generateAndWrite(
       "expressions",
       expressions,
       expressionsJsPath,
-      expressionConfigJsPath
+      expressionConfigJsPath,
+      exposedNameSet
     ),
   ]);
 
