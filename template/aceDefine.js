@@ -36,17 +36,20 @@ const action = (category, name, config, actionFunction, expose = true) => {
 };
 
 const act = action;
+const a = action;
 
 const condition = (category, name, config, actionFunction, expose = true) => {
   defineAce("condition", category, name, config, actionFunction, expose);
 };
 
 const cnd = condition;
+const c = condition;
 
 const expression = (category, name, config, actionFunction, expose = true) => {
   defineAce("expression", category, name, config, actionFunction, expose);
 };
 
 const exp = expression;
+const e = expression;
 
-export { act, action, cnd, condition, exp, expression };
+export { a, act, action, c, cnd, condition, e, exp, expression };
