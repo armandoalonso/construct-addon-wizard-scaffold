@@ -4,7 +4,7 @@ Description <br>
 <br>
 Author: skymen <br>
 ### Version: 1.0.0.0 <br>
-[<img src="https://placehold.co/200x50/4493f8/FFF?text=Download&font=montserrat" width="200"/>](https://github.com/ConstructFund/construct-addon-wizard-scaffold/releases/download/sample_addon-1.0.0.0/sample_addon-1.0.0.0.c3addon) <br>
+[<img src="https://placehold.co/200x50/4493f8/FFF?text=Download&font=montserrat" width="200"/>](https://github.com/ConstructFund/construct-addon-wizard-scaffold/releases/download/sample_addon-1.0.0.0.c3addon/sample_addon-1.0.0.0.c3addon) <br>
 <sub>Made using [CAW](https://marketplace.visualstudio.com/items?itemName=skymen.caw) </sub><br>
 
 ## Table of Contents
