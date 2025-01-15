@@ -22,6 +22,8 @@ export default function publish(type) {
     return true;
   }
 
+  chalkUtils.step("Publishing addon");
+
   // check type is major, minor, patch, revision or a version with the format x.x.x.x
   let newVersion = "";
   if (
@@ -48,14 +50,16 @@ export default function publish(type) {
     );
     return true;
   }
-  console.log(newVersion);
   // update version.js
   const versionFile = `./version.js`;
   const versionContent = `export default "${newVersion}";`;
   fs.writeFileSync(versionFile, versionContent);
 
+  chalkUtils.step("Building addon");
+
   // commit changes
   execSync(`npm run build`);
+  chalkUtils.step("Pushing addon to git");
   execSync(`git add -A`);
   execSync(`git commit -m "Version ${newVersion}"`);
   execSync(`git push`);
