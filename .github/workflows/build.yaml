@@ -1,8 +1,8 @@
 name: Build and Release
 on:
   push:
-    tags:
-      - v*
+    branches:
+      - main
 
 jobs:
   build-and-release:
@@ -38,6 +38,7 @@ jobs:
         with:
           artifacts: "dist/${{ steps.getfile.outputs.filename }}"
           omitBody: true
+          tag: ${{ steps.getfile.outputs.filename }}
           name: v${{ steps.getfile.outputs.version }}
           allowUpdates: true
           makeLatest: true
