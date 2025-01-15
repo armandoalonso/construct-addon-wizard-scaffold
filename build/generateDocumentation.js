@@ -68,17 +68,17 @@ export default async function generateDocumentation() {
   const readme = [];
   readme.push(getCoverImage());
   readme.push(`# ${config.name} <br>`);
+  readme.push(`${config.description} <br>`);
   const githubUrl = await getGithubURL();
   if (githubUrl && githubUrl !== "") {
-    readme.push(`### Version: ${config.version} <br>`);
     let addonFileName = `${config.id}-${config.version}.c3addon`;
     readme.push(
       `[<img src="https://placehold.co/200x50/4493f8/FFF?text=Download&font=montserrat" width="200"/>](${githubUrl}/releases/download/${addonFileName}/${addonFileName}) <br>`
     );
+    readme.push(`### Version: ${config.version} <br>`);
   }
-  readme.push("<br>");
-  readme.push(`Author: ${config.author} <br>`);
-  readme.push(`${config.description} <br>`);
+  // readme.push("<br>");
+  readme.push(`[b]Author:[/b] ${config.author} <br>`);
   if (
     config.website &&
     config.website !== "" &&
