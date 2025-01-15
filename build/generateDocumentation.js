@@ -85,7 +85,7 @@ export default async function generateDocumentation() {
   if (githubUrl && githubUrl !== "") {
     readme.push(`### Version: ${config.version} <br>`);
     readme.push(
-      `[<img src="https://placehold.co/200x50/4493f8/FFF?text=Download&font=montserrat" width="25"/>](${githubUrl}/releases/latest)`
+      `[<img src="https://placehold.co/200x50/4493f8/FFF?text=Download&font=montserrat" width="200"/>](${githubUrl}/releases/latest) <br>`
     );
   }
   //add link to c3ide2-framework
