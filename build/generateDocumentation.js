@@ -79,16 +79,16 @@ export default async function generateDocumentation() {
 
   readme.push("<br>");
   readme.push(`${config.description} <br>`);
-  readme.push(`<b>Author:</b> ${config.author} <br>`);
+  readme.push(`<b><u>Author:</u></b> ${config.author} <br>`);
   if (
     config.website &&
     config.website !== "" &&
     config.website !== "https://www.construct.net"
   ) {
-    readme.push(`Website: ${config.website} <br>`);
+    readme.push(`<b><u>Website:</u></b> ${config.website} <br>`);
   }
   if (config.addonUrl && config.addonUrl !== "") {
-    readme.push(`Addon Url: ${config.addonUrl} <br>`);
+    readme.push(`<b><u>Addon Url:</u></b> ${config.addonUrl} <br>`);
   }
   //add link to c3ide2-framework
   readme.push(
