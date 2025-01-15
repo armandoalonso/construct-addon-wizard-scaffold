@@ -5,7 +5,8 @@ import fromConsole from "./build/fromConsole.js";
 import { execSync } from "child_process";
 
 function isGitClean() {
-  const { status } = execSync("git status --porcelain");
+  const status = execSync("git status --porcelain").toString();
+  console.log(status, status === "");
   return status === "";
 }
 
