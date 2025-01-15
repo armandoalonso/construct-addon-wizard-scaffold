@@ -59,6 +59,9 @@ export default function publish(type) {
 
   // commit changes
   execSync(`npm run build`);
+  chalkUtils.newLine();
+  chalkUtils.divider();
+  chalkUtils.newLine();
   chalkUtils.step("Pushing addon to git");
   execSync(`git add -A`);
   execSync(`git commit -m "Version ${newVersion}"`);
