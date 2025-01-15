@@ -6,7 +6,6 @@ import { execSync } from "child_process";
 
 function isGitClean() {
   const status = execSync("git status --porcelain").toString();
-  console.log(status, status === "");
   return status === "";
 }
 
@@ -53,6 +52,13 @@ export default function publish(type) {
   const versionFile = `./version.js`;
   const versionContent = `export default "${newVersion}";`;
   fs.writeFileSync(versionFile, versionContent);
+
+  // commit changes
+  execSync(`npm run build`);
+  execSync(`git add -A`);
+  execSync(`git commit -m "Version ${newVersion}"`);
+  execSync(`git tag -a v${newVersion} -m "Version ${newVersion}"`);
+  execSync(`git push`);
 }
 
 if (fromConsole(import.meta.url)) {
