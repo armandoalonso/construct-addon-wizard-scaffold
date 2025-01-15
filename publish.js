@@ -58,6 +58,8 @@ export default function publish(type) {
   execSync(`git add -A`);
   execSync(`git commit -m "Version ${newVersion}"`);
   execSync(`git push`);
+
+  chalkUtils.success(`Version ${newVersion} published`);
 }
 
 if (fromConsole(import.meta.url)) {
