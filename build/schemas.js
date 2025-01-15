@@ -222,7 +222,6 @@ const configSchema = Joi.object({
       "other"
     ),
   files: Joi.object({
-    domSideScripts: Joi.array().items(Joi.string()).required(),
     extensionScript: Joi.object({
       enabled: Joi.boolean().required(),
       watch: Joi.boolean().required(),

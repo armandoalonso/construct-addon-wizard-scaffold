@@ -1,7 +1,7 @@
 import fs from "fs";
 import path from "path";
 import * as chalkUtils from "./chalkUtils.js";
-import { files } from "../config.caw.js";
+import { files, hasDomside } from "../config.caw.js";
 import fromConsole from "./fromConsole.js";
 import { failOnUnusedFiles } from "../buildconfig.js";
 
@@ -13,7 +13,6 @@ export default function processDependencies() {
   chalkUtils.step("Processing dependencies");
 
   let filesToCopy = [];
-  if (files.domSideScripts) filesToCopy.push(...files.domSideScripts);
   if (files.fileDependencies)
     filesToCopy.push(...files.fileDependencies.map((file) => file.filename));
 
@@ -28,6 +27,18 @@ export default function processDependencies() {
       fs.copyFileSync(src, dest);
     }
   });
+
+  if (hasDomside) {
+    const src = path.resolve("../generated/domside.js");
+    const dest = path.resolve("../dist/export/c3runtime/domside.js");
+
+    if (!fs.existsSync(src)) {
+      chalkUtils.error(`File not found: ${chalkUtils._errorUnderline(src)}`);
+      hadError = true;
+    } else {
+      fs.copyFileSync(src, dest);
+    }
+  }
 
   // check if files in files folder exist but aren't in the config
   const filesDir = "../src/files";

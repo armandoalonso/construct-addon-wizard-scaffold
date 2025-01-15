@@ -2,7 +2,7 @@ import { defineConfig } from "vite";
 
 export default defineConfig({
   build: {
-    outDir: "../src/files",
+    outDir: "../generated",
     rollupOptions: {
       preserveEntrySignatures: "strict",
       input: {

@@ -9,6 +9,7 @@ import {
   description,
   info,
   files,
+  hasDomside,
 } from "../config.caw.js";
 
 export default {
@@ -22,4 +23,5 @@ export default {
   description,
   info,
   files,
+  hasDomside,
 };

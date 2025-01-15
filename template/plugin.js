@@ -26,10 +26,8 @@ export default function (PLUGIN_INFO, parentClass) {
         );
       }
 
-      if (PLUGIN_INFO.files.domSideScripts) {
-        this._info.SetDOMSideScripts(
-          PLUGIN_INFO.files.domSideScripts.map((s) => `c3runtime/${s}`)
-        );
+      if (PLUGIN_INFO.hasDomside) {
+        this._info.SetDOMSideScripts(["c3runtime/domSide.js"]);
       }
 
       if (

@@ -11,12 +11,11 @@ export const description = "Description";
 export const category = ADDON_CATEGORY.GENERAL; // "3d", "data-and-storage", "form-controls", "input", "media", "monetisation", "platform-specific", "web", "other"
 
 export const files = {
-  domSideScripts: ["domside.js"],
   extensionScript: {},
   fileDependencies: [],
 };
 
-export const hasDomside = true;
+export const hasDomside = false;
 
 // categories that are not filled will use the folder name
 export const aceCategories = {};

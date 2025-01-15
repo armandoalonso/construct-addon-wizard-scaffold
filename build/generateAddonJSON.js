@@ -6,10 +6,8 @@ import fromConsole from "./fromConsole.js";
 
 function getFileListFromConfig() {
   const files = [];
-  if (config.files.domSideScripts) {
-    config.files.domSideScripts.forEach(function (file) {
-      files.push(`c3runtime/${file}`);
-    });
+  if (config.hasDomside) {
+    files.push("c3runtime/domSide.js");
   }
 
   if (config.files.extensionScript && config.files.extensionScript.enabled) {
