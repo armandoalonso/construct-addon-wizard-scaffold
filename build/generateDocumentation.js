@@ -72,6 +72,7 @@ export default async function generateDocumentation() {
   if (githubUrl && githubUrl !== "") {
     let addonFileName = `${config.id}-${config.version}.c3addon`;
     readme.push(`### Version ${config.version}`);
+    readme.push(``);
     readme.push(
       `[<img src="https://placehold.co/200x50/4493f8/FFF?text=Download&font=montserrat" width="200"/>](${githubUrl}/releases/download/${addonFileName}/${addonFileName})`
     );
