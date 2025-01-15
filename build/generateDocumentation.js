@@ -77,9 +77,9 @@ export default async function generateDocumentation() {
     );
   }
 
-  readme.push(`${config.description} <br>`);
   readme.push("<br>");
-  readme.push(`[b]Author:[/b] ${config.author} <br>`);
+  readme.push(`${config.description} <br>`);
+  readme.push(`<b>Author:</b> ${config.author} <br>`);
   if (
     config.website &&
     config.website !== "" &&
