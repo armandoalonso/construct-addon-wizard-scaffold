@@ -83,8 +83,9 @@ export default async function generateDocumentation() {
   }
   const githubUrl = await getGithubURL();
   if (githubUrl && githubUrl !== "") {
+    readme.push(`### Version: ${config.version} <br>`);
     readme.push(
-      `Download Latest Version : [Version: ${config.version}](${githubUrl}/releases/latest) <br>`
+      `[<img src="https://placehold.co/200x50/4493f8/FFF?text=Download&font=montserrat" width="25"/>](${githubUrl}/releases/latest)`
     );
   }
   //add link to c3ide2-framework
@@ -228,7 +229,7 @@ export default async function generateDocumentation() {
 
   chalkUtils.success("README.md generated successfully");
 
-  return true;
+  return false;
 }
 
 if (fromConsole(import.meta.url)) {
