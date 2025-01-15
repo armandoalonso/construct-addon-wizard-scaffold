@@ -4,12 +4,12 @@ import {
   PLUGIN_TYPE,
   PROPERTY_TYPE,
 } from "./template/enums.js";
-import version from "./version.js";
+import _version from "./version.js";
 export const addonType = ADDON_TYPE.PLUGIN;
 export const type = PLUGIN_TYPE.OBJECT;
 export const id = "sample_addon";
 export const name = "Sample Addon";
-export const version = version;
+export const version = _version;
 export const author = "skymen";
 export const website = "https://www.construct.net";
 export const documentation = "https://www.construct.net";
