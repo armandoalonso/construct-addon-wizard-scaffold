@@ -2,7 +2,7 @@
   "languageTag": "en-US",
   "fileDescription": "Strings for sample_addon.",
   "text": {
-    "behaviors": {
+    "plugins": {
       "sample_addon": {
         "name": "Sample Addon",
         "description": "Description",

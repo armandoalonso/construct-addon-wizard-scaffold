@@ -21,6 +21,7 @@ const buildSteps = [
   "./processDependencies.js",
   "./validateIcon.js",
   "./packageAddon.js",
+  "./generateDocumentation.js",
   "./cleanup.js",
 ];
 

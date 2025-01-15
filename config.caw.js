@@ -24,6 +24,11 @@ export const files = {
 // categories that are not filled will use the folder name
 export const aceCategories = {};
 
+export const githubConfig = {
+  addonUrl: "",
+  autoGenReadme: true,
+};
+
 export const info = {
   // icon: "icon.svg",
   // PLUGIN world only

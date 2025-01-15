@@ -21,6 +21,7 @@
     "build": "( cd build && node build.js )",
     "dev": "( cd build && node dev.js )",
     "updateProjectData": "( cd build && node updateProjectData.js )",
-    "init": "npm install && npm run updateProjectData"
+    "init": "npm install && npm run updateProjectData",
+    "generateDocs": "( cd build && node generateDocumentation.js )"
   }
 }

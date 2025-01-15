@@ -9,7 +9,8 @@
     "dist/exportStep": true,
     "package-lock.json": true,
     "package.json": true,
-    ".vscode": true
+    ".vscode": true,
+    ".github": true
   },
   "workspaceKeybindings.cawKeybinds.enabled": true
 }
