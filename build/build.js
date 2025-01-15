@@ -20,7 +20,6 @@ const buildSteps = [
   "./buildDomside.js",
   "./processDependencies.js",
   "./validateIcon.js",
-  "./generateEmptyFiles.js",
   "./packageAddon.js",
   "./cleanup.js",
 ];

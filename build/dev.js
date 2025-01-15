@@ -24,7 +24,6 @@ const buildSteps = [
   "./buildDomside.js",
   "./processDependencies.js",
   "./validateIcon.js",
-  "./generateEmptyFiles.js",
 ];
 
 let port = basePort;
