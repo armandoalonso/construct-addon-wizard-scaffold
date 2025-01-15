@@ -63,6 +63,7 @@ export default function publish(type) {
   chalkUtils.newLine();
   chalkUtils.divider();
   chalkUtils.success(`Version ${newVersion} published`);
+  chalkUtils.newLine();
 }
 
 if (fromConsole(import.meta.url)) {
