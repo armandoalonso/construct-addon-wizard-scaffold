@@ -59,6 +59,7 @@ export default function publish(type) {
   execSync(`git commit -m "Version ${newVersion}"`);
   execSync(`git tag -a v${newVersion} -m "Version ${newVersion}"`);
   execSync(`git push`);
+  execSync(`git push --tags`);
 }
 
 if (fromConsole(import.meta.url)) {
