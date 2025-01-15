@@ -76,7 +76,7 @@ export default async function generateDocumentation() {
       `[<img src="https://placehold.co/200x50/4493f8/FFF?text=Download&font=montserrat" width="200"/>](${githubUrl}/releases/download/${addonFileName}/${addonFileName})`
     );
     readme.push("<br>");
-    readme.push(`<sub>[See all releases](${githubUrl}/releases)</sub><br>`);
+    readme.push(`<sub> [See all releases](${githubUrl}/releases) </sub> <br>`);
   }
 
   readme.push("<br>");
