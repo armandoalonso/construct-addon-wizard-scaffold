@@ -14,11 +14,27 @@ export const ADDON_CATEGORY = {
 export const ADDON_TYPE = {
   PLUGIN: "plugin",
   BEHAVIOR: "behavior",
-  EFFECT: "effect",
+  // EFFECT: "effect",
 };
 
 export const PLUGIN_TYPE = {
   WORLD: "world",
   OBJECT: "object",
   DOM: "dom",
+};
+
+export const PROPERTY_TYPE = {
+  INTEGER: "integer",
+  FLOAT: "float",
+  PERCENT: "percent",
+  TEXT: "text",
+  LONGTEXT: "longtext",
+  CHECK: "check",
+  FONT: "font",
+  COMBO: "combo",
+  COLOR: "color",
+  OBJECT: "object",
+  GROUP: "group",
+  LINK: "link",
+  INFO: "info",
 };

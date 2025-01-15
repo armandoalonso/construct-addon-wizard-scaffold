@@ -6,7 +6,7 @@ export default defineConfig({
     rollupOptions: {
       preserveEntrySignatures: "strict",
       input: {
-        domside: "../src/domside/index.js",
+        domside: "../template/domside.js",
       },
       output: {
         entryFileNames: "[name].js",

@@ -18,7 +18,7 @@ action(
         name: "Param1",
         desc: "This is a sample param",
         type: "string",
-        initialValue: "Hello World",
+        initialValue: '"Hello World"',
       },
     ],
   },

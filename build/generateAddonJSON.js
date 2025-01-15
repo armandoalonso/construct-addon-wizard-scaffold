@@ -45,12 +45,7 @@ function addonFromConfig() {
     description: config.description,
     "editor-scripts": ["editor.js"],
     "file-list": [
-      "c3runtime/plugin.js",
-      "c3runtime/type.js",
-      "c3runtime/instance.js",
-      "c3runtime/expressions.js",
-      "c3runtime/conditions.js",
-      "c3runtime/actions.js",
+      "c3runtime/main.js",
       "lang/en-US.json",
       "aces.json",
       "addon.json",

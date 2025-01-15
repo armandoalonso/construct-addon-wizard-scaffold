@@ -3,6 +3,7 @@ import fromConsole from "./fromConsole.js";
 import * as chalkUtils from "./chalkUtils.js";
 
 export default function generateEmptyFiles() {
+  return false;
   // C3 needs these files to exist for some reason, so make empty ones
   const emptyFiles = [
     "actions.js",

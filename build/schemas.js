@@ -195,7 +195,9 @@ const propertySchema = Joi.object({
 });
 
 const configSchema = Joi.object({
-  addonType: Joi.string().valid("plugin", "behavior", "effect").required(),
+  addonType: Joi.string()
+    .valid("plugin", "behavior" /* , "effect" */)
+    .required(),
   type: Joi.string().valid("world", "object", "dom").required(),
   id: Joi.string().token().required(),
   name: Joi.string().required(),
@@ -268,6 +270,7 @@ const configSchema = Joi.object({
       CanBeBundled: Joi.boolean().default(true),
       IsDeprecated: Joi.boolean().default(false),
       GooglePlayServicesEnabled: Joi.boolean().default(false),
+      IsOnlyOneAllowed: Joi.boolean().default(false),
     }).required(),
     AddCommonACEs: Joi.object({
       Position: Joi.boolean().default(false),

@@ -1,4 +1,9 @@
-import { ADDON_CATEGORY, ADDON_TYPE, PLUGIN_TYPE } from "./template/enums.js";
+import {
+  ADDON_CATEGORY,
+  ADDON_TYPE,
+  PLUGIN_TYPE,
+  PROPERTY_TYPE,
+} from "./template/enums.js";
 export const addonType = ADDON_TYPE.PLUGIN;
 export const type = PLUGIN_TYPE.OBJECT;
 export const id = "sample_addon";
@@ -8,24 +13,31 @@ export const author = "skymen";
 export const website = "https://www.construct.net";
 export const documentation = "https://www.construct.net";
 export const description = "Description";
-export const category = ADDON_CATEGORY.GENERAL; // "3d", "data-and-storage", "form-controls", "input", "media", "monetisation", "platform-specific", "web", "other"
+export const category = ADDON_CATEGORY.GENERAL;
 
+export const hasDomside = false;
 export const files = {
   extensionScript: {},
   fileDependencies: [],
 };
-
-export const hasDomside = false;
 
 // categories that are not filled will use the folder name
 export const aceCategories = {};
 
 export const info = {
   // icon: "icon.svg",
-  // world only
+  // PLUGIN world only
   // defaultImageUrl: "default-image.png",
   Set: {
-    // world only
+    // COMMON to all
+    CanBeBundled: true,
+    IsDeprecated: false,
+    GooglePlayServicesEnabled: false,
+
+    // BEHAVIOR only
+    IsOnlyOneAllowed: false,
+
+    // PLUGIN world only
     IsResizable: false,
     IsRotatable: false,
     Is3D: false,
@@ -36,16 +48,11 @@ export const info = {
     SupportsEffects: false,
     MustPreDraw: false,
 
-    // object only
+    // PLUGIN object only
     IsSingleGlobal: true,
-
-    // world and object
-    CanBeBundled: true,
-    IsDeprecated: false,
-    GooglePlayServicesEnabled: false,
   },
+  // PLUGIN only
   AddCommonACEs: {
-    // world only
     Position: false,
     SceneGraph: false,
     Size: false,
@@ -58,21 +65,7 @@ export const info = {
 export const properties = [
   /*
   {
-    type:
-      "integer"
-      "float"
-      "percent"
-      "text"
-      "longtext"
-      "check"
-      "font"
-      "combo"
-      "color"
-      "object"
-      "group"
-      "link"
-      "info"
-
+    type: PROPERTY_TYPE.INTEGER,
     id: "property_id",
     options: {
       initialValue: 0,
@@ -93,14 +86,14 @@ export const properties = [
       // allowedPluginIds: ["Sprite", "<world>"],
 
       // for type link only
-      // linkCallback: `function(instOrObj) {}`,
+      // linkCallback: function(instOrObj) {},
       // linkText: "Link Text",
       // callbackType:
       //   "for-each-instance"
       //   "once-for-type"
 
       // for type info only
-      // infoCallback: `function(inst) {}`,
+      // infoCallback: function(inst) {},
     },
     name: "Property Name",
     desc: "Property Description",
