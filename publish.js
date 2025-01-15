@@ -60,6 +60,8 @@ export default function publish(type) {
   execSync(`git commit -m "Version ${newVersion}"`);
   execSync(`git push`);
 
+  chalkUtils.newLine();
+  chalkUtils.divider();
   chalkUtils.success(`Version ${newVersion} published`);
 }
 
