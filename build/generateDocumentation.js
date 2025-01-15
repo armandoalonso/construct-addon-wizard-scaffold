@@ -78,7 +78,6 @@ export default async function generateDocumentation() {
   }
 
   readme.push("<br>");
-  readme.push("<br>");
   readme.push("---");
   readme.push(`${config.description} <br>`);
   readme.push(`<b><u>Author:</u></b> ${config.author} <br>`);
