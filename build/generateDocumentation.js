@@ -68,9 +68,17 @@ export default async function generateDocumentation() {
   const readme = [];
   readme.push(getCoverImage());
   readme.push(`# ${config.name} <br>`);
-  readme.push(`${config.description} <br>`);
+  const githubUrl = await getGithubURL();
+  if (githubUrl && githubUrl !== "") {
+    readme.push(`### Version: ${config.version} <br>`);
+    let addonFileName = `${config.id}-${config.version}.c3addon`;
+    readme.push(
+      `[<img src="https://placehold.co/200x50/4493f8/FFF?text=Download&font=montserrat" width="200"/>](${githubUrl}/releases/download/${addonFileName}/${addonFileName}) <br>`
+    );
+  }
   readme.push("<br>");
   readme.push(`Author: ${config.author} <br>`);
+  readme.push(`${config.description} <br>`);
   if (
     config.website &&
     config.website !== "" &&
@@ -80,14 +88,6 @@ export default async function generateDocumentation() {
   }
   if (config.addonUrl && config.addonUrl !== "") {
     readme.push(`Addon Url: ${config.addonUrl} <br>`);
-  }
-  const githubUrl = await getGithubURL();
-  if (githubUrl && githubUrl !== "") {
-    readme.push(`### Version: ${config.version} <br>`);
-    let addonFileName = `${config.id}-${config.version}.c3addon`;
-    readme.push(
-      `[<img src="https://placehold.co/200x50/4493f8/FFF?text=Download&font=montserrat" width="200"/>](${githubUrl}/releases/download/${addonFileName}/${addonFileName}) <br>`
-    );
   }
   //add link to c3ide2-framework
   readme.push(
