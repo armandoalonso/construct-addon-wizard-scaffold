@@ -3,9 +3,9 @@ export const failOnMalformedExtraLang = true;
 
 // Post build cleanup configuration
 export const cleanup = {
-  keepExport: true,
-  keepExportStep: true,
-  keepGenerated: true,
+  keepExport: false,
+  keepExportStep: false,
+  keepGenerated: false,
   disableTip: false,
 };
 
