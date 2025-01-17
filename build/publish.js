@@ -47,7 +47,13 @@ export default function publish(type) {
   chalkUtils.divider();
   chalkUtils.step("Pushing addon to git");
   execSync(`git add -A`);
-  execSync(`git commit -m "Version ${newVersion}"`);
+  try {
+    // if there are no changes, don't commit
+    execSync(`git commit -m "Version ${newVersion}"`);
+  } catch (e) {
+    chalkUtils.info("No changes to commit");
+    return;
+  }
   execSync(`git push`);
 
   chalkUtils.newLine();
