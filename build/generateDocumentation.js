@@ -92,10 +92,16 @@ export default async function generateDocumentation() {
   readme.push("");
   readme.push("---");
   readme.push(`<b><u>Author:</u></b> ${config.author} <br>`);
+  if (publishConfig && publishConfig.addonUrl !== "") {
+    readme.push(
+      `<b>[Construct Addon Page](${publishConfig.addonUrl})</b>  <br>`
+    );
+  }
   if (
     config.website &&
     config.website !== "" &&
-    config.website !== "https://www.construct.net"
+    config.documentation !== "https://www.construct.net" &&
+    !config.website.includes("github.com")
   ) {
     readme.push(`<b>[Addon Website](${config.website})</b>  <br>`);
   }
@@ -105,11 +111,6 @@ export default async function generateDocumentation() {
     config.documentation !== "https://www.construct.net"
   ) {
     readme.push(`<b>[Documentation](${config.documentation})</b>  <br>`);
-  }
-  if (publishConfig && publishConfig.addonUrl !== "") {
-    readme.push(
-      `<b>[Construct Addon Page](${publishConfig.addonUrl})</b>  <br>`
-    );
   }
   //add link to c3ide2-framework
   readme.push(

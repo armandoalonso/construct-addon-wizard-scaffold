@@ -1,4 +1,4 @@
-<img src="./src/icon.svg?rand=3762" width="100" /><br>
+<img src="./src/icon.svg?rand=8697" width="100" /><br>
 # Sample Addon
 <i>Description</i> <br>
 ### Version 1.0.0.0
