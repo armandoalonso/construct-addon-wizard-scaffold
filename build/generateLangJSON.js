@@ -73,7 +73,8 @@ function langFromConfig() {
   root.actions = {};
   Object.keys(actionConfig.config).forEach((key) => {
     const action = actionConfig.config[key];
-    root.actions[key] = {
+    const id = action.id ? action.id : key;
+    root.actions[id] = {
       "list-name": action.listName,
       "display-text": action.displayText,
       description: action.description,
@@ -81,15 +82,15 @@ function langFromConfig() {
     };
     action.params = action.params || [];
     action.params.forEach((param) => {
-      root.actions[key].params[param.id] = {
+      root.actions[id].params[param.id] = {
         name: param.name,
         desc: param.desc,
       };
       if (param.type === "combo") {
-        root.actions[key].params[param.id].items = {};
+        root.actions[id].params[param.id].items = {};
         param.items.forEach((item) => {
           const itemkey = Object.keys(item)[0];
-          root.actions[key].params[param.id].items[itemkey] = item[itemkey];
+          root.actions[id].params[param.id].items[itemkey] = item[itemkey];
         });
       }
     });
@@ -98,7 +99,8 @@ function langFromConfig() {
   root.conditions = {};
   Object.keys(conditionConfig.config).forEach((key) => {
     const condition = conditionConfig.config[key];
-    root.conditions[key] = {
+    const id = condition.id ? condition.id : key;
+    root.conditions[id] = {
       "list-name": condition.listName,
       "display-text": condition.displayText,
       description: condition.description,
@@ -106,15 +108,15 @@ function langFromConfig() {
     };
     condition.params = condition.params || [];
     condition.params.forEach((param) => {
-      root.conditions[key].params[param.id] = {
+      root.conditions[id].params[param.id] = {
         name: param.name,
         desc: param.desc,
       };
       if (param.type === "combo") {
-        root.conditions[key].params[param.id].items = {};
+        root.conditions[id].params[param.id].items = {};
         param.items.forEach((item) => {
           const itemkey = Object.keys(item)[0];
-          root.conditions[key].params[param.id].items[itemkey] = item[itemkey];
+          root.conditions[id].params[param.id].items[itemkey] = item[itemkey];
         });
       }
     });
@@ -123,19 +125,20 @@ function langFromConfig() {
   root.expressions = {};
   Object.keys(expressionConfig.config).forEach((key) => {
     const expression = expressionConfig.config[key];
-    root.expressions[key] = {
+    const id = expression.id ? expression.id : key;
+    root.expressions[id] = {
       "translated-name": key,
       description: expression.description,
       params: {},
     };
     expression.params = expression.params || [];
     expression.params.forEach((param) => {
-      root.expressions[key].params[param.id] = {
+      root.expressions[id].params[param.id] = {
         name: param.name,
         desc: param.desc,
       };
       if (param.type === "combo") {
-        root.expressions[key].params[param.id].items = {};
+        root.expressions[id].params[param.id].items = {};
         param.items.forEach((item) => {
           const itemkey = Object.keys(item)[0];
           root.expressions[key].params[param.id].items[itemkey] = item[itemkey];
