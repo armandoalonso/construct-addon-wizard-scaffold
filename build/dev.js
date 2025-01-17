@@ -3,28 +3,8 @@ import { exec } from "child_process";
 import chokidar from "chokidar";
 import cors from "cors";
 import fromConsole from "./fromConsole.js";
-import build from "./build.js";
 import * as chalkUtils from "./chalkUtils.js";
 import { basePort } from "../devConfig.js";
-import path from "path";
-
-const buildSteps = [
-  "./preCleanup.js",
-  "./updateProjectData.js",
-  "./validateAddonConfig.js",
-  "./runAceDefiner.js",
-  "./generateAceFiles.js",
-  "./validateAceConfigs.js",
-  "./generateComboEnums.js",
-  "./buildstepWebpack.js",
-  "./generateAcesJSON.js",
-  "./generateAddonJSON.js",
-  "./generateLangJSON.js",
-  "./exportWebpack.js",
-  "./buildDomside.js",
-  "./processDependencies.js",
-  "./validateIcon.js",
-];
 
 let port = basePort;
 const localHostURL = () => `http://localhost:${port}/addon.json`;
@@ -35,13 +15,17 @@ export default async function dev() {
   const runBuild = () => {
     if (buildRunning) return;
     buildRunning = true;
-    build(buildSteps).then((hadError) => {
+    process.env.FORCE_COLOR = "1";
+    let childProcess = exec("node doDev.js", (error, stdout, stderr) => {
       buildRunning = false;
-      if (hadError) return;
+      if (error) {
+        return;
+      }
       chalkUtils.info(
         `Addon served at:\n${chalkUtils.infoHighlight(localHostURL())}`
       );
     });
+    childProcess.stdout.pipe(process.stdout);
   };
 
   // Run initial build

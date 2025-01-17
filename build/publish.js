@@ -41,6 +41,7 @@ export default function publish(type) {
   chalkUtils.step("Building addon");
 
   // commit changes
+  process.env.FORCE_COLOR = "1";
   execSync(`npm run build`);
   chalkUtils.newLine();
   chalkUtils.divider();

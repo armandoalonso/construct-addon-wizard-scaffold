@@ -52,6 +52,8 @@ const paramSchema = Joi.object({
 
 // Define the common schema
 const commonSchema = {
+  id: Joi.string().optional(),
+  c2id: Joi.number().integer().optional(),
   highlight: Joi.boolean().default(false),
   deprecated: Joi.boolean().default(false),
   listName: Joi.string().required(),
@@ -85,6 +87,8 @@ const expressionParamSchema = Joi.object({
 });
 
 const expressionSchema = Joi.object({
+  id: Joi.string().optional(),
+  c2id: Joi.number().integer().optional(),
   highlight: Joi.boolean().default(false),
   deprecated: Joi.boolean().default(false),
   returnType: Joi.string().required().valid("number", "string", "any"),

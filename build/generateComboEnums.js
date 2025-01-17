@@ -16,7 +16,7 @@ let expressionFunctions = null;
 function generateEnumFor(aceConfig, aceFunctions, paramsToGenerateEnumsFor) {
   for (let [name, config] of Object.entries(aceConfig.config)) {
     let func = aceFunctions.exposed[name];
-    if (!func) {
+    if (!func || !config.params) {
       continue;
     }
     for (let param of config.params) {
