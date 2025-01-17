@@ -23,6 +23,6 @@
     "updateProjectData": "( cd build && node updateProjectData.js )",
     "init": "npm install && npm run updateProjectData",
     "generateDocs": "( cd build && node generateDocumentation.js )",
-    "publish": "node publish.js"
+    "publish": " cd build && node publish.js "
   }
 }

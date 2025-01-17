@@ -1,27 +1,10 @@
 import fs from "fs";
-import version from "./version.js";
-import * as chalkUtils from "./build/chalkUtils.js";
-import fromConsole from "./build/fromConsole.js";
 import { execSync } from "child_process";
-
-function isGitClean() {
-  return true;
-  const status = execSync("git status --porcelain").toString();
-  return status === "";
-}
+import version from "../version.js";
+import * as chalkUtils from "./chalkUtils.js";
+import fromConsole from "./fromConsole.js";
 
 export default function publish(type) {
-  // check git is clean
-  if (!isGitClean()) {
-    chalkUtils.error(
-      "Git is not clean\n" +
-        chalkUtils._errorUnderline(
-          "Please commit all changes before publishing"
-        )
-    );
-    return true;
-  }
-
   chalkUtils.step("Publishing addon");
 
   // check type is major, minor, patch, revision or a version with the format x.x.x.x
@@ -51,7 +34,7 @@ export default function publish(type) {
     return true;
   }
   // update version.js
-  const versionFile = `./version.js`;
+  const versionFile = `../version.js`;
   const versionContent = `export default "${newVersion}";`;
   fs.writeFileSync(versionFile, versionContent);
 
