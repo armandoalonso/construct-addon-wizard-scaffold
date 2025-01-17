@@ -24,6 +24,8 @@ export default function publish(type) {
     newVersion = versionParts.join(".");
   } else if (/^\d+\.\d+\.\d+\.\d+$/.test(type)) {
     newVersion = type;
+  } else if (!type) {
+    newVersion = version;
   } else {
     chalkUtils.error(
       "Invalid version type\n" +

@@ -13,6 +13,9 @@ import { exec } from "child_process";
 
 function getFileWithTypeFromFolder(path, fileTypes) {
   const results = [];
+  if (!fs.existsSync(path)) {
+    return results;
+  }
   const files = fs.readdirSync(path);
   files.forEach((file) => {
     const ext = getFileExtension(file);
