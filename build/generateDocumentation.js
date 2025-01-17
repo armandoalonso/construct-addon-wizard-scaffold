@@ -42,10 +42,14 @@ function getCoverImage() {
   for (let i = 0; i < images.length; i++) {
     const imageName = images[i].split(".")[0];
     if (imageName === "cover") {
-      return `<img src="./examples/${images[i]}" width="150" /><br>`;
+      return `<img src="./examples/${images[i]}?rand=${Math.floor(
+        Math.random() * 10000
+      )}" width="150" /><br>`;
     }
   }
-  return '<img src="./src/icon.svg" width="100" /><br>';
+  return `<img src="./src/icon.svg?rand=${Math.floor(
+    Math.random() * 10000
+  )}" width="100" /><br>`;
 }
 
 async function getGithubURL() {
@@ -72,6 +76,7 @@ export default async function generateDocumentation() {
   const readme = [];
   readme.push(getCoverImage());
   readme.push(`# ${config.name}`);
+  readme.push(`<i>${config.description}</i> <br>`);
   const githubUrl = await getGithubURL();
   if (githubUrl && githubUrl !== "") {
     let addonFileName = `${config.id}-${config.version}.c3addon`;
@@ -86,17 +91,25 @@ export default async function generateDocumentation() {
 
   readme.push("");
   readme.push("---");
-  readme.push(`${config.description} <br>`);
   readme.push(`<b><u>Author:</u></b> ${config.author} <br>`);
   if (
     config.website &&
     config.website !== "" &&
     config.website !== "https://www.construct.net"
   ) {
-    readme.push(`<b><u>Website:</u></b> ${config.website} <br>`);
+    readme.push(`<b>[Addon Website](${config.website})</b>  <br>`);
+  }
+  if (
+    config.documentation &&
+    config.documentation !== "" &&
+    config.documentation !== "https://www.construct.net"
+  ) {
+    readme.push(`<b>[Documentation](${config.documentation})</b>  <br>`);
   }
   if (publishConfig && publishConfig.addonUrl !== "") {
-    readme.push(`<b><u>Addon Url:</u></b> ${publishConfig.addonUrl} <br>`);
+    readme.push(
+      `<b>[Construct Addon Page](${publishConfig.addonUrl})</b>  <br>`
+    );
   }
   //add link to c3ide2-framework
   readme.push(
@@ -151,7 +164,11 @@ export default async function generateDocumentation() {
         //check if image contains the name of the example file
         if (imageName.includes(fileName)) {
           // display the a small version of the image on a new line
-          readme.push(`<img src="./examples/${image}" width="200" />`);
+          readme.push(
+            `<img src="./examples/${image}?rand=${Math.floor(
+              Math.random() * 10000
+            )}" width="200" />`
+          );
         }
       });
       readme.push(`</br>`);
