@@ -1,6 +1,7 @@
 import fs from "fs";
 import path from "path";
 import * as config from "../config.caw.js";
+import { publishConfig } from "../buildconfig.js";
 import * as chalkUtils from "./chalkUtils.js";
 import fromConsole from "./fromConsole.js";
 import {
@@ -62,7 +63,7 @@ async function getGithubURL() {
 }
 
 export default async function generateDocumentation() {
-  if (config.githubConfig && !config.githubConfig.autoGenReadme) return false;
+  if (publishConfig && !publishConfig.autoGenReadme) return false;
   chalkUtils.step("Generating README.md");
 
   const readme = [];
@@ -91,7 +92,7 @@ export default async function generateDocumentation() {
   ) {
     readme.push(`<b><u>Website:</u></b> ${config.website} <br>`);
   }
-  if (config.addonUrl && config.addonUrl !== "") {
+  if (publishConfig && publishConfig.addonUrl !== "") {
     readme.push(`<b><u>Addon Url:</u></b> ${config.addonUrl} <br>`);
   }
   //add link to c3ide2-framework

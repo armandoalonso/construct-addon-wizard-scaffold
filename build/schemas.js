@@ -254,10 +254,6 @@ const configSchema = Joi.object({
       .required(),
   }).required(),
   aceCategories: Joi.object().pattern(Joi.string(), Joi.string()).default({}),
-  githubConfig: Joi.object({
-    addonUrl: Joi.string().required().allow(""),
-    autoGenReadme: Joi.boolean().required(),
-  }).required(),
   info: Joi.object({
     icon: Joi.string().optional(),
     Set: Joi.object({

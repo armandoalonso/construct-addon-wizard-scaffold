@@ -14,3 +14,8 @@ export const failOnUnusedFiles = true;
 export const disableTips = false;
 
 export const disableWarnings = false;
+
+export const publishConfig = {
+  addonUrl: "",
+  autoGenReadme: true,
+};
