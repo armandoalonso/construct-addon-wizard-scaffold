@@ -9,7 +9,8 @@
     "joi": "^17.13.3",
     "vite": "^6.0.7",
     "webpack-cli": "^6.0.1",
-    "yocto-spinner": "^0.1.2"
+    "yocto-spinner": "^0.1.2",
+    "open": "^10.1.0"
   },
   "type": "module",
   "scripts": {
@@ -21,8 +22,9 @@
     "build": "cd build && node build.js",
     "dev": "cd build && node dev.js",
     "updateProjectData": "cd build && node updateProjectData.js",
-    "init": "npm install && npm run updateProjectData",
+    "init": "npm install && cd build && node init.js",
     "generateDocs": "cd build && node generateDocumentation.js",
     "publish": "cd build && node publish.js"
-  }
+  },
+  "dependencies": {}
 }
