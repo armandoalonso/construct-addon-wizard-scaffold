@@ -5,7 +5,7 @@ import * as chalkUtils from "./chalkUtils.js";
 import fromConsole from "./fromConsole.js";
 
 export default function initialiseProject() {
-  let process = exec("npm install && npm run updateProjectData");
+  let process = exec("npm run updateProjectData");
   process.stdout.pipe(process.stdout);
   process.stderr.pipe(process.stderr);
   process.on("exit", () => {
