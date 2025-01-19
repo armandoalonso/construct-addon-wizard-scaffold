@@ -22,7 +22,7 @@
     "build": "cd build && node build.js",
     "dev": "cd build && node dev.js",
     "updateProjectData": "cd build && node updateProjectData.js",
-    "init": "npm install && cd build && node init.js",
+    "init": "node init.js",
     "generateDocs": "cd build && node generateDocumentation.js",
     "publish": "cd build && node publish.js"
   },

@@ -1,18 +1,25 @@
 import fs from "fs";
 import open from "open";
-import { execSync } from "child_process";
+import { exec } from "child_process";
 import * as chalkUtils from "./chalkUtils.js";
 import fromConsole from "./fromConsole.js";
 
 export default function initialiseProject() {
-  console.log(execSync("npm install"));
-  console.log(execSync("npm run updateProjectData"));
-  if (!fs.existsSync(".git")) {
-    console.log(execSync("git init"));
-    console.log(execSync("git add -A"));
-    console.log(execSync('git commit -m "Initial commit"'));
-    open("https://github.com/new");
-  }
+  let process = exec("npm install && npm run updateProjectData");
+  process.stdout.pipe(process.stdout);
+  process.stderr.pipe(process.stderr);
+  process.on("exit", () => {
+    if (!fs.existsSync(".git")) {
+      let process2 = exec(
+        "git init && git add -A && git commit -m 'Initial commit'"
+      );
+      process2.stdout.pipe(process2.stdout);
+      process2.stderr.pipe(process2.stderr);
+      process2.on("exit", () => {
+        open("https://github.com/new");
+      });
+    }
+  });
 }
 
 if (fromConsole(import.meta.url)) {
