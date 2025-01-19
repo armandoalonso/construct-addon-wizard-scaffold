@@ -42,14 +42,10 @@ function getCoverImage() {
   for (let i = 0; i < images.length; i++) {
     const imageName = images[i].split(".")[0];
     if (imageName === "cover") {
-      return `<img src="./examples/${images[i]}?rand=${Math.floor(
-        Math.random() * 10000
-      )}" width="150" /><br>`;
+      return `<img src="./examples/${images[i]}" width="150" /><br>`;
     }
   }
-  return `<img src="./src/icon.svg?rand=${Math.floor(
-    Math.random() * 10000
-  )}" width="100" /><br>`;
+  return `<img src="./src/icon.svg" width="100" /><br>`;
 }
 
 async function getGithubURL() {
@@ -78,16 +74,15 @@ export default async function generateDocumentation() {
   readme.push(`# ${config.name}`);
   readme.push(`<i>${config.description}</i> <br>`);
   const githubUrl = await getGithubURL();
-  if (githubUrl && githubUrl !== "") {
-    let addonFileName = `${config.id}-${config.version}.c3addon`;
-    readme.push(`### Version ${config.version}`);
-    readme.push(``);
-    readme.push(
-      `[<img src="https://placehold.co/200x50/4493f8/FFF?text=Download&font=montserrat" width="200"/>](${githubUrl}/releases/download/${addonFileName}/${addonFileName})`
-    );
-    readme.push("<br>");
-    readme.push(`<sub> [See all releases](${githubUrl}/releases) </sub> <br>`);
-  }
+  if (!githubUrl || githubUrl === "") return false;
+  let addonFileName = `${config.id}-${config.version}.c3addon`;
+  readme.push(`### Version ${config.version}`);
+  readme.push(``);
+  readme.push(
+    `[<img src="https://placehold.co/200x50/4493f8/FFF?text=Download&font=montserrat" width="200"/>](${githubUrl}/releases/download/${addonFileName}/${addonFileName})`
+  );
+  readme.push("<br>");
+  readme.push(`<sub> [See all releases](${githubUrl}/releases) </sub> <br>`);
 
   readme.push("");
   readme.push("---");
@@ -156,7 +151,6 @@ export default async function generateDocumentation() {
 
     exampleFiles.forEach((file) => {
       const fileName = file.split(".")[0];
-      readme.push(`- [${fileName}](./examples/${file})`);
 
       //add images
       images.forEach((image) => {
@@ -165,13 +159,15 @@ export default async function generateDocumentation() {
         //check if image contains the name of the example file
         if (imageName.includes(fileName)) {
           // display the a small version of the image on a new line
-          readme.push(
-            `<img src="./examples/${image}?rand=${Math.floor(
-              Math.random() * 10000
-            )}" width="200" />`
-          );
+          readme.push(`<img src="./examples/${image}" width="200" /> <br>`);
         }
       });
+      readme.push(
+        `- [${fileName}](${githubUrl}/raw/refs/heads/main/examples/${file.replace(
+          / /g,
+          "%20"
+        )})`
+      );
       readme.push(`</br>`);
     });
   }
