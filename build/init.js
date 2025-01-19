@@ -1,8 +1,8 @@
 import fs from "fs";
 import open from "open";
 import { execSync } from "child_process";
-import * as chalkUtils from "./chalkUtils";
-import fromConsole from "./fromConsole";
+import * as chalkUtils from "./chalkUtils.js";
+import fromConsole from "./fromConsole.js";
 
 export default function initialiseProject() {
   console.log(execSync("npm install"));
