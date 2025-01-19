@@ -38,6 +38,7 @@ function getCoverImage() {
     "png",
     "gif",
     "jpeg",
+    "webp",
   ]);
   for (let i = 0; i < images.length; i++) {
     const imageName = images[i].split(".")[0];
@@ -147,28 +148,47 @@ export default async function generateDocumentation() {
       "png",
       "gif",
       "jpeg",
+      "webp",
     ]);
 
+    // any example has Images
+    let anyHasImages = false;
+    exampleFiles.forEach((file) => {
+      const fileName = file.split(".")[0];
+      let imageArr = images.filter((image) =>
+        image.split(".")[0].includes(fileName)
+      );
+      if (imageArr.length > 0) {
+        anyHasImages = true;
+      }
+    });
+
+    if (anyHasImages) {
+      readme.push(`| Images | Description | Download |`);
+      readme.push(`| --- | --- | --- |`);
+    } else {
+      readme.push(`| Description | Download |`);
+      readme.push(`| --- | --- |`);
+    }
     exampleFiles.forEach((file) => {
       const fileName = file.split(".")[0];
 
       //add images
-      images.forEach((image) => {
-        const imageName = image.split(".")[0];
-        readme.push(`</br>`);
-        //check if image contains the name of the example file
-        if (imageName.includes(fileName)) {
-          // display the a small version of the image on a new line
-          readme.push(`<img src="./examples/${image}" width="200" /> <br>`);
-        }
+      let imageArr = images.filter((image) =>
+        image.split(".")[0].includes(fileName)
+      );
+      let imgString = "";
+      imageArr.forEach((image) => {
+        imgString += `<img src="./examples/${image}" width="100" />`;
       });
       readme.push(
-        `- [${fileName}](${githubUrl}/raw/refs/heads/main/examples/${file.replace(
+        `${
+          anyHasImages ? `| ${imgString} ` : ""
+        }| ${fileName} | [<img src="https://placehold.co/120x30/4493f8/FFF?text=Download&font=montserrat" width="120"/>](${githubUrl}/raw/refs/heads/main/examples/${file.replace(
           / /g,
           "%20"
-        )})`
+        )}) |`
       );
-      readme.push(`</br>`);
     });
   }
 

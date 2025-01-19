@@ -249,11 +249,14 @@ const configSchema = Joi.object({
               "external-css"
             )
             .required(),
-        }).when(Joi.object({ type: Joi.string().valid("copy-to-output") }), {
-          then: Joi.object({
-            fileType: Joi.string().required(),
-          }),
-        })
+        }).when(
+          Joi.object({ type: Joi.string().valid("copy-to-output") }).unknown(),
+          {
+            then: Joi.object({
+              fileType: Joi.string().required(),
+            }),
+          }
+        )
       )
       .required(),
   }).required(),
@@ -286,7 +289,7 @@ const configSchema = Joi.object({
     }).required(),
   })
     .required()
-    .when(Joi.object({ type: Joi.string().valid("world") }), {
+    .when(Joi.object({ type: Joi.string().valid("world") }).unknown(), {
       then: Joi.object({
         defaultImageUrl: Joi.string().optional(),
       }),
