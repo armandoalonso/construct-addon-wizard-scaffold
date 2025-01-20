@@ -26,6 +26,11 @@ const paramSchema = Joi.object({
       "animation",
       "objinstancevar"
     ),
+    autocompleteId: Joi.string().when('type', {
+      is: "string",
+      then: Joi.string().optional(),
+      otherwise: Joi.forbidden()
+    }),
 })
   .when(Joi.object({ type: Joi.string().valid("combo") }).unknown(), {
     then: Joi.object({
