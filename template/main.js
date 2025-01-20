@@ -15,6 +15,7 @@ import {
   exposed as exposedExps,
   unexposed as Exps,
 } from "../generated/expressions.js";
+import AddonTypeMap from "./addonTypeMap.js";
 
 const pluginBaseClasses = {
   object: globalThis.ISDKPluginBase,
@@ -60,11 +61,6 @@ Object.assign(Instance.prototype, exposedExps);
 
 const Type = createType(typeClass[runtimeConfig.addonType]);
 Object.assign(Type.prototype, enums);
-
-const AddonTypeMap = {
-  plugin: "Plugins",
-  behavior: "Behaviors",
-};
 
 globalThis.C3[AddonTypeMap[runtimeConfig.addonType]][runtimeConfig.id] = {
   Acts,

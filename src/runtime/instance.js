@@ -1,4 +1,5 @@
-import { id } from "../../config.caw.js";
+import { id, addonType } from "../../config.caw.js";
+import AddonTypeMap from "../../template/addonTypeMap.js";
 
 export default function (parentClass) {
   return class extends parentClass {
@@ -10,7 +11,7 @@ export default function (parentClass) {
     }
 
     _trigger(method) {
-      super._trigger(self.C3.Plugins[id].Cnds[method]);
+      super._trigger(self.C3[AddonTypeMap[addonType]][id].Cnds[method]);
     }
 
     _release() {
