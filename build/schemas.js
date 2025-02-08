@@ -26,11 +26,11 @@ const paramSchema = Joi.object({
       "animation",
       "objinstancevar"
     ),
-    autocompleteId: Joi.string().when('type', {
-      is: "string",
-      then: Joi.string().optional(),
-      otherwise: Joi.forbidden()
-    }),
+  autocompleteId: Joi.string().when("type", {
+    is: "string",
+    then: Joi.string().optional(),
+    otherwise: Joi.forbidden(),
+  }),
 })
   .when(Joi.object({ type: Joi.string().valid("combo") }).unknown(), {
     then: Joi.object({
@@ -41,7 +41,7 @@ const paramSchema = Joi.object({
   })
   .when(Joi.object({ type: Joi.string().valid("object") }).unknown(), {
     then: Joi.object({
-      allowedPluginIds: Joi.array().items(Joi.string()).required(),
+      allowedPluginIds: Joi.array().items(Joi.string()).optional(),
     }),
   })
   .when(
@@ -167,7 +167,7 @@ const propertySchema = Joi.object({
     .when("type", {
       is: "object",
       then: Joi.object({
-        allowedPluginIds: Joi.array().items(Joi.string()).required(),
+        allowedPluginIds: Joi.array().items(Joi.string()).optional(),
       }),
     })
     .when("type", {
