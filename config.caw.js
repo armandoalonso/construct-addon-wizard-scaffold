@@ -10,6 +10,7 @@ export const type = PLUGIN_TYPE.OBJECT;
 export const id = "sample_addon";
 export const name = "Sample Addon";
 export const version = _version;
+export const minConstructVersion = undefined;
 export const author = "skymen";
 export const website = "https://www.construct.net";
 export const documentation = "https://www.construct.net";

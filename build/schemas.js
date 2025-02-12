@@ -213,6 +213,7 @@ const configSchema = Joi.object({
   version: Joi.string()
     .regex(/\d+\.\d+\.\d+\.\d+/)
     .required(),
+  minConstructVersion: Joi.string(),
   author: Joi.string().required(),
   website: Joi.string().required(),
   documentation: Joi.string().required(),
