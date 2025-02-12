@@ -1,4 +1,4 @@
-import Joi from "joi";
+import Joi, { version } from "joi";
 
 // Define the paramSchema
 const paramSchema = Joi.object({
@@ -263,6 +263,14 @@ const configSchema = Joi.object({
             }),
           }
         )
+      )
+      .required(),
+    cordovaPlugins: Joi.array()
+      .items(
+        Joi.object({
+          id: Joi.string().required(),
+          version: Joi.string().required(),
+        })
       )
       .required(),
   }).required(),

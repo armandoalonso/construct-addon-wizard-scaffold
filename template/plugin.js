@@ -77,6 +77,12 @@ export default function (ADDON_INFO, parentClass) {
             });
           });
         }
+
+        if (ADDON_INFO.files.cordovaPlugins) {
+          ADDON_INFO.files.cordovaPlugins.forEach((plugin) => {
+            this._info.AddCordovaPlugin(plugin.id, plugin.version);
+          });
+        }
       }
       SDK.Lang.PushContext(".properties");
       this._info.SetProperties(
