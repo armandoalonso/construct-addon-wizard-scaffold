@@ -99,6 +99,8 @@ export default function (ADDON_INFO, parentClass) {
               plugin:
                 plugin.plugin && plugin.plugin instanceof Function
                   ? plugin.plugin(this)
+                  : plugin.variables
+                  ? this
                   : undefined,
               version: plugin.version,
               platform: plugin.platform,
