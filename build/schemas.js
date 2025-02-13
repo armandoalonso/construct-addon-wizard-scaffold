@@ -240,7 +240,7 @@ const configSchema = Joi.object({
       targets: Joi.array().items(Joi.string().valid("x86", "x64")).required(),
       name: Joi.string().optional(),
     })
-      .required()
+      .optional()
       .allow({}),
     fileDependencies: Joi.array()
       .items(
@@ -264,15 +264,29 @@ const configSchema = Joi.object({
           }
         )
       )
-      .required(),
-    cordovaPlugins: Joi.array()
+      .optional(),
+    cordovaPluginReferences: Joi.array()
       .items(
         Joi.object({
           id: Joi.string().required(),
-          version: Joi.string().required(),
+          version: Joi.string().optional(),
+          platform: Joi.string().valid("all", "ios", "android").optional(),
+          variables: Joi.array()
+            .items(Joi.array().items(Joi.string()).length(2))
+            .optional(),
+          plugin: Joi.function().optional(),
         })
       )
-      .required(),
+      .optional(),
+    cordovaResourceFiles: Joi.array()
+      .items(
+        Joi.object({
+          src: Joi.string().required(),
+          target: Joi.string().optional(),
+          platform: Joi.string().valid("all", "ios", "android").optional(),
+        })
+      )
+      .optional(),
   }).required(),
   aceCategories: Joi.object().pattern(Joi.string(), Joi.string()).default({}),
   info: Joi.object({

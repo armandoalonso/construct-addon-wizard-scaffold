@@ -20,6 +20,20 @@ export default function (ADDON_INFO, parentClass) {
         );
       }
 
+      const properties = [];
+      const propertiesMap = {};
+      (ADDON_INFO.properties || []).forEach((prop) => {
+        const sdkProp = new SDK.PluginProperty(prop.type, prop.id, {
+          ...prop.options,
+          items:
+            prop.type === "combo" && prop.options.items
+              ? prop.options.items.map((i) => Object.keys(i)[0])
+              : undefined,
+        });
+        properties.push(sdkProp);
+        propertiesMap[prop.id] = sdkProp;
+      });
+
       if (ADDON_INFO.info && ADDON_INFO.info.Set) {
         Object.keys(ADDON_INFO.info.Set).forEach((key) => {
           const value = ADDON_INFO.info.Set[key];
@@ -78,25 +92,32 @@ export default function (ADDON_INFO, parentClass) {
           });
         }
 
-        if (ADDON_INFO.files.cordovaPlugins) {
-          ADDON_INFO.files.cordovaPlugins.forEach((plugin) => {
-            this._info.AddCordovaPlugin(plugin.id, plugin.version);
+        if (ADDON_INFO.files.cordovaPluginReferences) {
+          ADDON_INFO.files.cordovaPluginReferences.forEach((plugin) => {
+            this._info.AddCordovaPluginReference({
+              id: plugin.id,
+              plugin:
+                plugin.plugin && plugin.plugin instanceof Function
+                  ? plugin.plugin(this)
+                  : undefined,
+              version: plugin.version,
+              platform: plugin.platform,
+              variables: plugin.variables
+                ? plugin.variables.map((v) => [v[0], propertiesMap[v[1]]])
+                : undefined,
+            });
+          });
+        }
+
+        if (ADDON_INFO.files.cordovaResourceFiles) {
+          ADDON_INFO.files.cordovaResourceFiles.forEach((file) => {
+            this._info.AddCordovaResourceFile(file);
           });
         }
       }
+
       SDK.Lang.PushContext(".properties");
-      this._info.SetProperties(
-        (ADDON_INFO.properties || []).map(
-          (prop) =>
-            new SDK.PluginProperty(prop.type, prop.id, {
-              ...prop.options,
-              items:
-                prop.type === "combo" && prop.options.items
-                  ? prop.options.items.map((i) => Object.keys(i)[0])
-                  : undefined,
-            })
-        )
-      );
+      this._info.SetProperties(properties);
       SDK.Lang.PopContext(); // .properties
       SDK.Lang.PopContext();
     }

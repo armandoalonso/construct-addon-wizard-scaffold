@@ -21,7 +21,8 @@ export const hasDomside = false;
 export const files = {
   extensionScript: {},
   fileDependencies: [],
-  cordovaPlugins: [],
+  cordovaPluginReferences: [],
+  cordovaResourceFiles: [],
 };
 
 // categories that are not filled will use the folder name
