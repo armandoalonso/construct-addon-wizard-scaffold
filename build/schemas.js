@@ -53,7 +53,12 @@ const paramSchema = Joi.object({
         initialValue: Joi.string().required().allow(""),
       }),
     }
-  );
+  )
+  .when(Joi.object({ type: Joi.string().valid("projectfile") }).unknown(), {
+    then: Joi.object({
+      filter: Joi.string().optional(),
+    }),
+  });;
 
 // Define the common schema
 const commonSchema = {
@@ -117,7 +122,8 @@ const propertySchema = Joi.object({
       "object",
       "group",
       "link",
-      "info"
+      "info",
+      "projectfile"
     )
     .required(),
 
@@ -200,7 +206,13 @@ const propertySchema = Joi.object({
       then: Joi.object({
         interpolatable: Joi.boolean().default(false),
       }),
-    }),
+    })
+    .when("type", {
+      is: "projectfile",
+      then: Joi.object({
+        filter: Joi.string().optional(),
+      }),
+    })
 });
 
 const configSchema = Joi.object({
@@ -287,6 +299,7 @@ const configSchema = Joi.object({
         })
       )
       .optional(),
+    typeScriptDefinitions: Joi.array().items(Joi.string()).optional(),
   }).required(),
   aceCategories: Joi.object().pattern(Joi.string(), Joi.string()).default({}),
   info: Joi.object({
@@ -315,6 +328,11 @@ const configSchema = Joi.object({
       Appearance: Joi.boolean().default(false),
       ZOrder: Joi.boolean().default(false),
     }).required(),
+    ScriptInterfaceName: Joi.object({
+      instance: Joi.string().optional(),
+      objectType: Joi.string().optional(),
+      plugin: Joi.string().optional(),
+    }).optional()
   })
     .required()
     .when(Joi.object({ type: Joi.string().valid("world") }).unknown(), {

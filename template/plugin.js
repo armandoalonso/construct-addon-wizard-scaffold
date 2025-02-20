@@ -52,6 +52,20 @@ export default function (ADDON_INFO, parentClass) {
         });
       }
 
+      if (ADDON_INFO.info.ScriptInterfaceName) {
+        const interfaces = {};
+        if (ADDON_INFO.info.ScriptInterfaceName.instance) {
+          interfaces.instance = ADDON_INFO.info.ScriptInterfaceName.instance;
+        }
+        if (ADDON_INFO.info.ScriptInterfaceName.objectType) {
+          interfaces.objectType = ADDON_INFO.info.ScriptInterfaceName.objectType;
+        }
+        if (ADDON_INFO.info.ScriptInterfaceName.plugin) {
+          interfaces.plugin = ADDON_INFO.info.ScriptInterfaceName.plugin;
+        }
+        this._info.SetScriptInterfaceNames(interfaces);
+      }
+
       if (ADDON_INFO.addonType === "plugin") {
         this._info.SetPluginType(
           ADDON_INFO.type === "object" ? "object" : "world"

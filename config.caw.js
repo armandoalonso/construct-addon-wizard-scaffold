@@ -23,6 +23,7 @@ export const files = {
   fileDependencies: [],
   cordovaPluginReferences: [],
   cordovaResourceFiles: [],
+  typeScriptDefinitions: [],
 };
 
 // categories that are not filled will use the folder name
@@ -64,6 +65,11 @@ export const info = {
     Appearance: false,
     ZOrder: false,
   },
+  // ScriptInterfaceName: {
+  //   instance: "IInstance",
+  //   objectType: "IType",
+  //   plugin: "IPlugin",
+  //}
 };
 
 export const properties = [
