@@ -117,10 +117,10 @@ export default async function buildWrapperExtension() {
       chalkUtils.error(
         "Could not find MSBuild. Please install MSBuild and try again."
       );
-      hadError = true;
+      hadOptionalError = true;
     }
 
-    if (!hadError) {
+    if (!hadError && !hadOptionalError) {
       try {
         // Build each configuration
         for (const config of configurations) {
