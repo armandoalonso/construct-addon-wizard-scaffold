@@ -19,7 +19,13 @@ export const category = ADDON_CATEGORY.GENERAL;
 
 export const hasDomside = false;
 export const files = {
-  extensionScript: {},
+  extensionScript: {
+    enabled: false, // set to false to disable the extension script
+    watch: true, // set to true to enable live reload on changes during development
+    targets: ["x86", "x64"],
+    // you don't need to change this, the build step will rename the dll for you. Only change this if you change the name of the dll exported by Visual Studio
+    name: "MyExtension",
+  },
   fileDependencies: [],
   cordovaPluginReferences: [],
   cordovaResourceFiles: [],

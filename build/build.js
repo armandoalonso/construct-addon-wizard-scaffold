@@ -18,6 +18,7 @@ const buildSteps = [
   "./generateLangJSON.js",
   "./exportWebpack.js",
   "./buildDomside.js",
+  "./generateWrapperExtension.js",
   "./processDependencies.js",
   "./validateIcon.js",
   "./packageAddon.js",

@@ -14,6 +14,7 @@ build([
   "./generateLangJSON.js",
   "./exportWebpack.js",
   "./buildDomside.js",
+  "./generateWrapperExtensionDev.js",
   "./processDependencies.js",
   "./validateIcon.js",
 ]).then((hadError) => {

@@ -47,11 +47,14 @@ const instanceClass = {
 const Instance = createInstance(
   class extends instanceClass[runtimeConfig.addonType] {
     constructor() {
+      const superObject = {};
       if (runtimeConfig.hasDomside) {
-        super({ domComponentId: runtimeConfig.id });
-      } else {
-        super();
+        superObject.domComponentId = runtimeConfig.id;
       }
+      if (runtimeConfig.hasWrapperExtension) {
+        superObject.wrapperComponentId = runtimeConfig.id;
+      }
+      super(superObject);
     }
   }
 );
