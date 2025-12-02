@@ -117,7 +117,8 @@ const propertySchema = Joi.object({
       "object",
       "group",
       "link",
-      "info"
+      "info",
+      "projectfile"
     )
     .required(),
 
@@ -184,6 +185,12 @@ const propertySchema = Joi.object({
       is: "info",
       then: Joi.object({
         infoCallback: Joi.function().required(),
+      }),
+    })
+    .when("type", {
+      is: "projectfile",
+      then: Joi.object({
+        filter: Joi.string().optional(),
       }),
     })
     .when("type", {

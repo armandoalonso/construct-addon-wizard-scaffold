@@ -104,6 +104,11 @@ export const properties = [
 
       // for type info only
       // infoCallback: function(inst) {},
+
+      // for type projectfile only (plugins only, Addon SDK v2, r426+)
+      // A dropdown list from which any project file in the project can be chosen.
+      // The property value at runtime is a relative path to fetch the project file from.
+      // filter: ".txt", // optional: filter list by file extension (e.g., ".txt" to only list .txt files)
     },
     name: "Property Name",
     desc: "Property Description",
