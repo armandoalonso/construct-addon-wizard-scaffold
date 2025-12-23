@@ -1,4 +1,4 @@
-<img src="./src/icon.svg?rand=8697" width="100" /><br>
+<img src="./src/icon.svg" width="100" /><br>
 # Sample Addon
 <i>Description</i> <br>
 ### Version 1.0.0.0
@@ -46,9 +46,9 @@ npm run dev
 ## Actions
 | Action | Description | Params
 | --- | --- | --- |
+| Sample Action Combo | This is a sample action | Param1             *(combo)* <br> |
 | Sample Action | This is a sample action | Param1             *(string)* <br> |
 | Sample Action Async | This is a sample action |  |
-| Sample Action Combo | This is a sample action | Param1             *(combo)* <br> |
 | Sample Action | This is a sample action | Param1             *(string)* <br> |
 
 
@@ -56,9 +56,9 @@ npm run dev
 ## Conditions
 | Condition | Description | Params
 | --- | --- | --- |
+| Sample Condition | This is a sample condition | Param1 *(combo)* <br> |
 | Sample Condition | This is a sample condition | Param1 *(string)* <br> |
 | Sample Trigger | This is a sample trigger |  |
-| Sample Condition | This is a sample condition | Param1 *(combo)* <br> |
 | Sample Condition | This is a sample condition |  |
 
 
@@ -66,6 +66,6 @@ npm run dev
 ## Expressions
 | Expression | Description | Return Type | Params
 | --- | --- | --- | --- |
-| Expression | Sample Expression | number |  | 
 | Expression2 | Sample Expression | string |  | 
+| Expression | Sample Expression | number |  | 
 | SampleExpression | This is a sample expression | string |  | 

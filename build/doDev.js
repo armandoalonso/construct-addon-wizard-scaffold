@@ -13,6 +13,7 @@ build([
   "./generateAddonJSON.js",
   "./generateLangJSON.js",
   "./exportWebpack.js",
+  "./validateTerser.js",
   "./buildDomside.js",
   "./generateWrapperExtensionDev.js",
   "./processDependencies.js",
