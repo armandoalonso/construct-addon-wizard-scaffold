@@ -15,6 +15,10 @@ export const disableTips = false;
 
 export const disableWarnings = false;
 
+// Terser validation configuration
+// Options: "error" (fail build), "warning" (show warning but continue), "skip" (disable check)
+export const terserValidation = "error";
+
 export const publishConfig = {
   addonUrl: "",
   autoGenReadme: true,

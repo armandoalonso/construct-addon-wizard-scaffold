@@ -4,11 +4,20 @@ import { fileURLToPath } from "url";
 import { minify } from "terser";
 import * as chalkUtils from "./chalkUtils.js";
 import fromConsole from "./fromConsole.js";
+import { terserValidation } from "../buildconfig.js";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 export default async function validateTerser() {
+  // Check if validation is skipped
+  if (terserValidation === "skip") {
+    chalkUtils.info(
+      "Terser validation is disabled (terserValidation = 'skip')"
+    );
+    return false;
+  }
+
   chalkUtils.step("Validating Terser build (mangle-props keep_quoted)");
 
   const filesToCheck = [
@@ -49,19 +58,28 @@ export default async function validateTerser() {
       }
       chalkUtils.success(`Terser validation passed for ${file}`);
     } catch (error) {
-      chalkUtils.error(`Terser validation failed for ${file}`);
-      chalkUtils.error(error.message || error);
-      hadError = true;
+      if (terserValidation === "warning") {
+        chalkUtils.warning(`Terser validation failed for ${file}`);
+        chalkUtils.warning(error.message || error);
+        hadError = true;
+      } else {
+        chalkUtils.error(`Terser validation failed for ${file}`);
+        chalkUtils.error(error.message || error);
+        hadError = true;
+      }
     }
   }
 
-  if (hadError) {
+  if (hadError && terserValidation === "warning") {
+    chalkUtils.info("Terser validation completed with warnings.");
+    return { hadOptionalError: true };
+  } else if (hadError) {
     chalkUtils.failed("Terser validation failed.");
+    return true;
   } else {
     chalkUtils.success("Terser validation successful!");
+    return false;
   }
-
-  return hadError;
 }
 
 // if is being called from the command line
