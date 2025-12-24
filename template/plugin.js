@@ -52,6 +52,15 @@ export default function (ADDON_INFO, parentClass) {
         });
       }
 
+      if (ADDON_INFO.files.remoteFileDependencies) {
+        ADDON_INFO.files.remoteFileDependencies.forEach((file) => {
+          this._info.AddRemoteScriptDependency(
+            file.src,
+            file.type === "module" ? "module" : undefined
+          );
+        });
+      }
+
       if (ADDON_INFO.addonType === "plugin") {
         this._info.SetPluginType(
           ADDON_INFO.type === "object" ? "object" : "world"

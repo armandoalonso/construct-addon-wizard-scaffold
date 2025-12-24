@@ -272,6 +272,19 @@ const configSchema = Joi.object({
         )
       )
       .optional(),
+    remoteFileDependencies: Joi.array()
+      .items(
+        Joi.object({
+          src: Joi.string()
+            .required()
+            .pattern(/^(https:\/\/|\/\/)/, { name: "secure-url" })
+            .message(
+              "Remote script URLs must use https:// or same-protocol // URLs. http:// is not allowed for security reasons."
+            ),
+          type: Joi.string().valid("", "module").optional().allow(""),
+        })
+      )
+      .optional(),
     cordovaPluginReferences: Joi.array()
       .items(
         Joi.object({

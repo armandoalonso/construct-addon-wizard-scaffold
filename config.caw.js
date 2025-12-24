@@ -27,6 +27,12 @@ export const files = {
     name: "MyExtension",
   },
   fileDependencies: [],
+  remoteFileDependencies: [
+    // {
+    //   src: "https://example.com/api.js", // Must use https:// or same-protocol // URLs. http:// is not allowed.
+    //   type: "" // Optional: "" or "module". Empty string or omit for classic script.
+    // }
+  ],
   cordovaPluginReferences: [],
   cordovaResourceFiles: [],
 };
