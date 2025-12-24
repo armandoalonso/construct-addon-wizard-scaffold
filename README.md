@@ -1,15 +1,15 @@
 <img src="./src/icon.svg" width="100" /><br>
 # Sample Addon
 <i>Description</i> <br>
-### Version 1.0.0.0
+### Version 0.0.0.0
 
-[<img src="https://placehold.co/200x50/4493f8/FFF?text=Download&font=montserrat" width="200"/>](https://github.com/ConstructFund/construct-addon-wizard-scaffold/releases/download/sample_addon-1.0.0.0.c3addon/sample_addon-1.0.0.0.c3addon)
+[<img src="https://placehold.co/200x50/4493f8/FFF?text=Download&font=montserrat" width="200"/>](https://github.com/ConstructFund/construct-addon-wizard-scaffold/releases/download/sample_addon-0.0.0.0.c3addon/sample_addon-0.0.0.0.c3addon)
 <br>
 <sub> [See all releases](https://github.com/ConstructFund/construct-addon-wizard-scaffold/releases) </sub> <br>
 
-#### What's New in 1.0.0.0
+#### What's New in 0.0.0.0
 **Added:**
-Initial release with example actions, conditions, and expressions. Support for async actions and trigger conditions.
+Scaffolded project setup with basic structure and dependencies.
 
 
 <sub>[View full changelog](#changelog)</sub>
@@ -81,9 +81,9 @@ npm run dev
 ---
 ## Changelog
 
-### Version 1.0.0.0
+### Version 0.0.0.0
 
 **Added:**
-Initial release with example actions, conditions, and expressions. Support for async actions and trigger conditions.
+Scaffolded project setup with basic structure and dependencies.
 
 ---
