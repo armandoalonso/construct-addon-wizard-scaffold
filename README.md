@@ -9,7 +9,7 @@
 
 #### What's New in 0.0.0.0
 **Added:**
-Scaffolded project setup with basic structure and dependencies.
+Initial release.
 
 
 <sub>[View full changelog](#changelog)</sub>
@@ -84,6 +84,6 @@ npm run dev
 ### Version 0.0.0.0
 
 **Added:**
-Scaffolded project setup with basic structure and dependencies.
+Initial release.
 
 ---
