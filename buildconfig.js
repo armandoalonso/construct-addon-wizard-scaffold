@@ -20,6 +20,7 @@ export const disableWarnings = false;
 export const terserValidation = "error";
 
 export const publishConfig = {
-  addonUrl: "",
+  addonUrl: "", // e.g., "https://www.construct.net/en/make-games/addons/111/my-addon"
+  itchioPage: "", // e.g., "username/game-id" format like "skymen/my-addon"
   autoGenReadme: true,
 };

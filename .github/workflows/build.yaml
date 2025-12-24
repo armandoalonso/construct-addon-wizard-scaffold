@@ -126,3 +126,42 @@ jobs:
             --uploadFile dist/${{ steps.getfile.outputs.filename }} \
             --version ${{ steps.getfile.outputs.version }} \
             --releaseNotes "$release_notes"
+
+      - name: Check if itch.io variables are set
+        id: check_itch
+        run: |
+          publish=true
+          if [[ -z "${{ secrets.BUTLER_API_KEY }}" ]]; then
+            echo "BUTLER_API_KEY is not set. skip itch.io publishing."
+            publish=false
+          fi
+          echo "publish=$publish" >> $GITHUB_OUTPUT
+
+      - name: Get Itch.io Page
+        if: steps.check_itch.outputs.publish == 'true'
+        id: itchio
+        run: |
+          itchioPage=$(grep -oP 'itchioPage:\s?"\K[^"]*' buildconfig.js | cut -d '"' -f 1)
+          echo "Itch.io Page: $itchioPage"
+          if [[ -z "$itchioPage" ]]; then
+            echo "Itch.io Page is not set. skip itch.io publishing."
+            exit 1
+          fi
+
+          # Extract username and game ID from "username/game-id" format
+          itchUsername=$(echo "$itchioPage" | cut -d '/' -f 1)
+          itchGameId=$(echo "$itchioPage" | cut -d '/' -f 2)
+
+          echo "username=$itchUsername" >> $GITHUB_OUTPUT
+          echo "gameId=$itchGameId" >> $GITHUB_OUTPUT
+
+      - name: Publish to Itch.io
+        if: steps.check_itch.outputs.publish == 'true'
+        uses: KikimoraGames/itch-publish@v0.0.3
+        with:
+          butlerApiKey: ${{ secrets.BUTLER_API_KEY }}
+          gameData: dist/${{ steps.getfile.outputs.filename }}
+          itchUsername: ${{ steps.itchio.outputs.username }}
+          itchGameId: ${{ steps.itchio.outputs.gameId }}
+          buildChannel: c3addon
+          buildNumber: ${{ steps.getfile.outputs.version }}

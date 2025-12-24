@@ -176,6 +176,15 @@ export default async function generateDocumentation() {
     );
   }
   if (
+    publishConfig &&
+    publishConfig.itchioPage &&
+    publishConfig.itchioPage !== ""
+  ) {
+    readme.push(
+      `<b>[Itch.io Page](https://itch.io/${publishConfig.itchioPage})</b>  <br>`
+    );
+  }
+  if (
     config.website &&
     config.website !== "" &&
     config.documentation !== "https://www.construct.net" &&
