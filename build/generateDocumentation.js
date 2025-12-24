@@ -180,8 +180,10 @@ export default async function generateDocumentation() {
     publishConfig.itchioPage &&
     publishConfig.itchioPage !== ""
   ) {
+    // Split username/game-id to construct proper itch.io URL
+    const [username, gameId] = publishConfig.itchioPage.split("/");
     readme.push(
-      `<b>[Itch.io Page](https://itch.io/${publishConfig.itchioPage})</b>  <br>`
+      `<b>[Itch.io Page](https://${username}.itch.io/${gameId})</b>  <br>`
     );
   }
   if (

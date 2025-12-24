@@ -21,6 +21,6 @@ export const terserValidation = "error";
 
 export const publishConfig = {
   addonUrl: "", // e.g., "https://www.construct.net/en/make-games/addons/111/my-addon"
-  itchioPage: "", // e.g., "username/game-id" format like "skymen/my-addon"
+  itchioPage: "", // Format: "username/page-id" (taken from https://username.itch.io/page-id)
   autoGenReadme: true,
 };
