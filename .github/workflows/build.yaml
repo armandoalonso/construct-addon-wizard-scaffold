@@ -35,12 +35,46 @@ jobs:
           echo "Last modified file version: $version"
           echo "version=$version" >> $GITHUB_OUTPUT
 
+      - name: Extract changelog for version
+        id: changelog
+        run: |
+          if [ -f "CHANGELOG.json" ]; then
+            version="${{ steps.getfile.outputs.version }}"
+            # Extract changelog for this version from JSON
+            changelog=$(node -e "
+              const fs = require('fs');
+              const data = JSON.parse(fs.readFileSync('CHANGELOG.json', 'utf-8'));
+              if (data['$version']) {
+                const v = data['$version'];
+                let output = [];
+                if (v.added) output.push('**Added:**\\n' + v.added);
+                if (v.changed) output.push('**Changed:**\\n' + v.changed);
+                if (v.fixed) output.push('**Fixed:**\\n' + v.fixed);
+                console.log(output.join('\\n\\n'));
+              }
+            ")
+            if [ -n "$changelog" ]; then
+              echo "Found changelog for version ${{ steps.getfile.outputs.version }}"
+              echo "changelog<<EOF" >> $GITHUB_OUTPUT
+              echo "$changelog" >> $GITHUB_OUTPUT
+              echo "EOF" >> $GITHUB_OUTPUT
+              echo "has_changelog=true" >> $GITHUB_OUTPUT
+            else
+              echo "No changelog entry found for this version"
+              echo "has_changelog=false" >> $GITHUB_OUTPUT
+            fi
+          else
+            echo "No CHANGELOG.json file found"
+            echo "has_changelog=false" >> $GITHUB_OUTPUT
+          fi
+
       - name: Create Release
         id: create_release
         uses: ncipollo/release-action@v1
         with:
           artifacts: "dist/${{ steps.getfile.outputs.filename }}"
-          omitBody: true
+          body: ${{ steps.changelog.outputs.has_changelog == 'true' && steps.changelog.outputs.changelog || '' }}
+          omitBody: ${{ steps.changelog.outputs.has_changelog != 'true' }}
           tag: ${{ steps.getfile.outputs.filename }}
           name: v${{ steps.getfile.outputs.version }}
           allowUpdates: true
@@ -80,10 +114,15 @@ jobs:
       - name: Publish to Construct 3
         if: steps.check.outputs.publish == 'true'
         run: |
+          if [ "${{ steps.changelog.outputs.has_changelog }}" = "true" ]; then
+            release_notes="${{ steps.changelog.outputs.changelog }}"
+          else
+            release_notes="Released via GitHub Actions"
+          fi
           c3addon publish \
             --addonUrl '${{steps.url.outputs.url}}' \
             --authUser ${{ secrets.C3_AUTH_USER }} \
             --authPassword ${{ secrets.C3_AUTH_PASSWORD }} \
             --uploadFile dist/${{ steps.getfile.outputs.filename }} \
             --version ${{ steps.getfile.outputs.version }} \
-            --releaseNotes 'Released via GitHub Actions'
+            --releaseNotes "$release_notes"

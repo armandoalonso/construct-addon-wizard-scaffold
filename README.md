@@ -7,6 +7,13 @@
 <br>
 <sub> [See all releases](https://github.com/ConstructFund/construct-addon-wizard-scaffold/releases) </sub> <br>
 
+#### What's New in 1.0.0.0
+**Added:**
+Initial release with example actions, conditions, and expressions. Support for async actions and trigger conditions.
+
+
+<sub>[View full changelog](#changelog)</sub>
+
 ---
 <b><u>Author:</u></b> skymen <br>
 <sub>Made using [CAW](https://marketplace.visualstudio.com/items?itemName=skymen.caw) </sub><br>
@@ -69,3 +76,14 @@ npm run dev
 | Expression2 | Sample Expression | string |  | 
 | Expression | Sample Expression | number |  | 
 | SampleExpression | This is a sample expression | string |  | 
+
+
+---
+## Changelog
+
+### Version 1.0.0.0
+
+**Added:**
+Initial release with example actions, conditions, and expressions. Support for async actions and trigger conditions.
+
+---
